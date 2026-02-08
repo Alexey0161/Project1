@@ -4,7 +4,7 @@ import ast
 import sys
 
 def main():
-    parser = argparse.ArgumentParser(description="Универсальный парсер функции")
+    parser = argparse.ArgumentParser(description="Универсальный парсер функции. Запускать из командной строки из папки где находится файл код: python parser2.py 'def add(x, y): return x + y' --func_name add --args 5 8")
     parser.add_argument('function_code', type=str, help='Код функции или описание для парсинга')
     parser.add_argument('--func_name', type=str, default='my_func', help='Имя функции для вызова')
     parser.add_argument('--args', nargs='*', help='Аргументы для вызова функции', default=[])

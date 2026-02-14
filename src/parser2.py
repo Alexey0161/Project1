@@ -1,10 +1,25 @@
-
+"""
+Документация:
+для запуска парсера, --> перейти в папку, где он находится -->
+    1. Вариант запуска с телом функции в командной строке:
+            python parser2.py "def add(x, y): return x + y" --func_name add --args 5 8
+    2. Вариант запуска с передачей парсеру имени файла, в котором находится функция --> он открывает файл
+       2.1. читает содержимое командой <--- для терминала VSCode, то есть PowerShell:
+            (Get-Content calculator.py | Out-String)
+       Полностью команда выглядит так (проверено ---> работает)
+            python parser2.py (Get-Content calculator.py | Out-String) --func_name add --args 5 8
+       2.2. читает содержимое командой <--- для терминала bash:
+            bash
+            "$(cat calculator.py)"
+        Полностью команда выглядит так (НЕ ПРОВЕРЕНО):
+            bash
+            python parser2.py "$(cat calculator.py)" --func_name add --args 5 8
+"""
 import argparse
-import ast
-import sys
+
 
 def main():
-    parser = argparse.ArgumentParser(description="Универсальный парсер функции. Запускать из командной строки из папки где находится файл код: python parser2.py 'def add(x, y): return x + y' --func_name add --args 5 8")
+    parser = argparse.ArgumentParser(description="Универсальный парсер функции. ")
     parser.add_argument('function_code', type=str, help='Код функции или описание для парсинга')
     parser.add_argument('--func_name', type=str, default='my_func', help='Имя функции для вызова')
     parser.add_argument('--args', nargs='*', help='Аргументы для вызова функции', default=[])

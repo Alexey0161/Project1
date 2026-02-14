@@ -1,5 +1,6 @@
 import argparse
 
+
 def main():
     parser = argparse.ArgumentParser(description="Парсер функции")
     parser.add_argument('function_code', type=str, help='Код функции или описание для парсинга')

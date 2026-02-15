@@ -1,2 +1,6 @@
-if 3 in [1,2,3,4,5]:
-    print(777)
+from datetime import date
+today = date.today()
+print(today )
+
+name = f"file{today}.py"
+print(name)

@@ -33,8 +33,8 @@ def count_files(target_dir):
 
 if __name__ == "__main__":
     # Простая проверка команды
-    if len(sys.argv) > 2 and sys.argv[1] == "count":
-        count_files(sys.argv[2])
+    if len(sys.argv) > 1:# and sys.argv[1] == "count":
+        count_files(sys.argv[1])
     else:
         print("Используйте: python cli.py count <имя_папки>")
 

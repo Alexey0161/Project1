@@ -24,7 +24,12 @@ def main():
             print("Критическая ошибка: Вы ввели не число! Попробуйте еще раз.")
             
     elif choice == "2":
-        count_files()
+        print('----Запущет счетчик файлов в папке----')
+        try:
+            target_dir = input('Введите полный путь к папке: ')
+            count_files(target_dir)
+        except Exception:
+            print('Такого пути не существует')
     else:
         print("Ошибка: такого варианта нет. Попробуйте снова!")
 

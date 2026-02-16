@@ -1,12 +1,14 @@
 # Импортируем ваши фичи из папки src
 from src.calculator import add
 from src.filesystem.cli_cnt_files import count_files
+from src.filesystem.cli_modif_files_2 import process_logic
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
     print("Выберите действие:")
     print("1. Запустить калькулятор")
     print("2. Запустить счетчик файлов")
+    print("3. Запустить установщик даты в имя файла")
     
     choice = input("Введите номер: ")
     
@@ -24,12 +26,34 @@ def main():
             print("Критическая ошибка: Вы ввели не число! Попробуйте еще раз.")
             
     elif choice == "2":
-        print('----Запущет счетчик файлов в папке----')
+        print('----Запуcкает счетчик файлов в папке----')
         try:
-            target_dir = input('Введите полный путь к папке: ')
+            target_dir = input('Введите полный путь к папке: ').strip().replace('"', '')
             count_files(target_dir)
-        except Exception:
-            print('Такого пути не существует')
+        except Exception as e:
+            
+            print(e)
+
+    elif choice == "3":
+        print('----Запускает установщик даты в имена файлов ----')
+        target_dir = input('Введите полный путь к папке: ').strip().replace('"', '')
+        print('1. Запускает установку даты в имена во всех папках, в том числе и ВЛОЖЕННЫХ')
+        print('2. Запускает установку даты в именах всех файлов ТОЛЬКО в выбранной папке')
+        sub_choice = input('Введите номер: ')
+        try:
+            if sub_choice == '1':
+                process_logic(target_dir, True)
+            elif sub_choice == '2':
+                process_logic(target_dir)
+            elif sub_choice == '':
+                print('Пустой ввод. Программа прервана. Повторите ввод заново')
+            else:
+                print('Ошибка ввода. Повторите ввод заново. Выполняется выход из программы')
+                exit()
+        except Exception as e:
+            
+            print(e)
+        
     else:
         print("Ошибка: такого варианта нет. Попробуйте снова!")
 

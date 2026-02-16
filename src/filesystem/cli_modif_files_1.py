@@ -34,14 +34,18 @@ def modif_files(root_path):
     args = parser.parse_args()
     
     if args.recursive is True:
+        if not os.path.exists(root_path): # через if защищаем код, от падения, если пути не сущенствует
+        # print(f"Ошибка: Путь {target_dir} не существует.")
+            raise FileNotFoundError(f"Ошибка: Путь {root_path} не существует.")
         for p, d, f in os.walk(root_path):
             for i in f:
                 if re.match(pattern,i): # фильтруем имена файлов по наличию расширения
                 
                     # Склеиваем путь: папка + имя файла
-                    full_path = os.path.join(p, i) 
+                    # full_path = os.path.join(p, i) 
                     
                     try:
+                        full_path = os.path.join(p, i)
                         stats = os.stat(full_path)
                         # 1. Получаем секунды
                         creation_seconds = stats.st_ctime 
@@ -60,6 +64,7 @@ def modif_files(root_path):
                         os.rename(full_path, full_path_modif)
                     except FileNotFoundError:
                         print(f"Ошибка: Файл {i} не найден по пути {full_path}")
+                        e = f"Ошибка: директория {os.path.basename(root_path)} не найдена"
     
     else:
         print(os.path.basename(root_path), 52)
@@ -96,8 +101,10 @@ def modif_files(root_path):
 # modif_files(root_path)
 # modif_files('cli_find_file.py')                                      
 if __name__ == '__main__':
+    print(sys.argv[1])
         
     if len(sys.argv) >= 2:
+        
         modif_files(sys.argv[1])
 
 

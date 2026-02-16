@@ -1,6 +1,6 @@
 # Импортируем ваши фичи из папки src
 from src.calculator import add
-from src.cli_cnt_files import count_files
+from src.filesystem.cli_cnt_files import count_files
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
@@ -10,16 +10,18 @@ def main():
     
     choice = input("Введите номер: ")
     
+ 
     if choice == "1":
-        print('----Запущен режим калькулятора----')
         try:
-            value1 = input('Введите первое число: ')
-            value2 = input('Введите второе число: ')
-            result = add(int(value1), int(value2))
-            print(f'Результат сложения равен: {result}')
-        except ValueError as e:
-            e = 'Вводить нужно только целые числа'
-            print(e)
+            # Валидация происходит ЗДЕСЬ
+            v1 = float(input('Введите x: ')) 
+            v2 = float(input('Введите y: '))
+            
+            # Передаем уже ЧИСТЫЕ данные в логику
+            print(f"Результат: {add(v1, v2)}")
+            
+        except ValueError:
+            print("Критическая ошибка: Вы ввели не число! Попробуйте еще раз.")
             
     elif choice == "2":
         count_files()
@@ -34,3 +36,4 @@ if __name__ == "__main__":
         print("\nПрограмма принудительно завершена пользователем.")
     except Exception as e:
         print(f"Упс! Произошла непредвиденная ошибка: {e}")
+                

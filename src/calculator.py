@@ -1,12 +1,6 @@
-
 def add(x, y):
-    print(type(x))
+    # Логика не должна гадать, числа это или нет. 
+    # Если мы здесь, значит main.py уже всё проверил.
     if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
-        raise TypeError("Ошибка!!!! Нужно ввести число")
-    
-    return x+y
-# try:
-    
-#     print(add(8, '6'))
-# except TypeError as e:
-#     print(e)
+        raise TypeError("Внутренняя ошибка: add ожидает числа")
+    return x + y

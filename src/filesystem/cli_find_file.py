@@ -8,9 +8,10 @@ r""" --- чтобы в комментарии можно было писать �
 
 import os
 import sys
-
+import logging
 
 def find_file(target_dir, size):
+    target_dir = os.path.normpath(target_dir)
     limit_size = int(size) * 1024 #преобразуем кбайты в байты
     t = [] # создаем список для файлов, которые прошли фильтр
     for r, d, f in os.walk(target_dir):
@@ -24,13 +25,15 @@ def find_file(target_dir, size):
 
                 if full_size < limit_size:
                     t.append(i)
-                    print(f'Найден файл: {i} {full_size / 1024: .2f}')
+                    logging.info(f'Найден файл: {i} {full_size / 1024: .2f}')
     return t
 
 
 
 if __name__ == '__main__':
 
-    if len(sys.argv)  == 3 and sys.argv[1]  == 'find':
-        find_file(sys.argv[2], sys.argv[3])
+    if len(sys.argv)  >= 2:
+        find_file(sys.argv[1], sys.argv[2])
+    else:
+        logging.warning("Используйте: python cli.py  <имя_папки> <размер>")
 

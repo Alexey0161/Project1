@@ -2,13 +2,20 @@
 from src.calculator import add
 from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_modif_files_2 import process_logic
+from src.filesystem.cli_find_file import find_file
+from src.filesystem.cli_copy_files import copy_file
+
+# импортируем модуль логирования
+import logging
+
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
     print("Выберите действие:")
     print("1. Запустить калькулятор")
     print("2. Запустить счетчик файлов")
-    print("3. Запустить установщик даты в имя файла")
+    print("3. Запустить поисковик файлов")
+    print("4. Запустить установщик даты в имя файла")
     
     choice = input("Введите номер: ")
     
@@ -23,7 +30,7 @@ def main():
             print(f"Результат: {add(v1, v2)}")
             
         except ValueError:
-            print("Критическая ошибка: Вы ввели не число! Попробуйте еще раз.")
+            logging.error("Критическая ошибка: Вы ввели не число! Попробуйте еще раз.")
             
     elif choice == "2":
         print('----Запуcкает счетчик файлов в папке----')
@@ -33,8 +40,16 @@ def main():
         except Exception as e:
             
             print(e)
-
     elif choice == "3":
+        print('----Запускает поисковик файлов по фильтру: размер меньше заданного значения-----')
+        target_dir = input('Введите полный путь к папке: ').strip().replace('"', '')
+        size = input('Введите размер, меньше которого должны быть найденные файлы: ')
+        try:
+            find_file(target_dir, size)
+        except Exception as e:
+            logging.error(e)
+
+    elif choice == "4":
         print('----Запускает установщик даты в имена файлов ----')
         target_dir = input('Введите полный путь к папке: ').strip().replace('"', '')
         print('1. Запускает установку даты в имена во всех папках, в том числе и ВЛОЖЕННЫХ')
@@ -46,23 +61,23 @@ def main():
             elif sub_choice == '2':
                 process_logic(target_dir)
             elif sub_choice == '':
-                print('Пустой ввод. Программа прервана. Повторите ввод заново')
+                logging.error('Пустой ввод. Программа прервана. Повторите ввод заново')
             else:
-                print('Ошибка ввода. Повторите ввод заново. Выполняется выход из программы')
+                logging.warning('Ошибка ввода. Повторите ввод заново. Выполняется выход из программы')
                 return
         except Exception as e:
             
-            print(e)
+            logging.error(e)
         
     else:
-        print("Ошибка: такого варианта нет. Попробуйте снова!")
+        logging.error("Ошибка: такого варианта нет. Попробуйте снова!")
 
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\nПрограмма принудительно завершена пользователем.")
+        logging.warning("\nПрограмма принудительно завершена пользователем.")
     except Exception as e:
-        print(f"Упс! Произошла непредвиденная ошибка: {e}")
+        logging.error(f"Упс! Произошла непредвиденная ошибка: {e}")
                 

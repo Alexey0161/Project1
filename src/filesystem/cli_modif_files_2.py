@@ -2,6 +2,7 @@ import os
 import argparse
 from datetime import datetime
 from pathlib import Path
+import logging
 
 def rename_file_with_date(file_path):
     """Вспомогательная функция для переименования одного файла"""
@@ -12,16 +13,17 @@ def rename_file_with_date(file_path):
         directory = os.path.dirname(file_path)
         name, ext = os.path.splitext(os.path.basename(file_path))
         if formatted_date in name:
-            print('В имени файла уже есть дата создания. Изменения в имя файла не вносятся')
+        
+            logging.info(f"Пропуск файла {name}: дата уже присутствует.")
             return
         else:
             new_name = f"{name}_{formatted_date}{ext}"
             new_path = os.path.join(directory, new_name)
             
-            print(f'Меняем: {name}{ext} --> {new_name}')
+            logging.info(f'Меняем: {name}{ext} --> {new_name}')
             os.rename(file_path, new_path)
     except Exception as e:
-        print(f"Ошибка при обработке {file_path}: {e}")
+        logging.warning(f"Ошибка при обработке {file_path}: {e}")
 
 def process_logic(root_path, recursive=None):
     """Основная логика обхода, которая не зависит от argparse"""
@@ -50,4 +52,4 @@ if __name__ == '__main__':
     try:
         process_logic(args.path, args.recursive)
     except Exception as e:
-        print(e)
+        logging.error(e)

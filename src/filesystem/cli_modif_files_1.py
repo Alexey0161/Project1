@@ -15,6 +15,7 @@ python cli_modif_files.py C:\Users\ivano\Desktop\Project1\src\destination
 import os
 import re, sys
 import argparse
+import logging
 
 from datetime import datetime
 
@@ -59,7 +60,7 @@ def modif_files(root_path):
                         name, ext = os.path.splitext(full_path)
         # Собираем новое имя
                         new_name = f"{os.path.basename(name)}_{formatted_date}{ext}"
-                        print(f'Старое имя: {os.path.basename(name)} меняем --> {new_name}')
+                        logging.info(f'Старое имя: {os.path.basename(name)} меняем --> {new_name}')
                         full_path_modif = os.path.join(p, new_name)
                         os.rename(full_path, full_path_modif)
                     except FileNotFoundError:

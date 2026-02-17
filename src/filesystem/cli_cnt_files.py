@@ -10,17 +10,17 @@ C:\Users\ivano\Desktop\Project1\src ,
 
 import os
 import sys
+import logging
 
 
 # Допустим, путь к папке мы берем из sys.argv[2]
 # python cli.py count folder_name
  # возвращает список введенных имен в комндной строке, то есть 0 - имя вызываемого файла
-                         # 1 - выполняемая команда, 2 - путь к папке, с которой  работает функция вызываемеого файла
+     # 1 - выполняемая команда, 2 - путь к папке, с которой  работает функция вызываемеого файла
 def count_files(target_dir):
     target_dir = os.path.normpath(target_dir)
     if not os.path.exists(target_dir): # через if защищаем код, от падения, если пути не сущенствует
-        # print(f"Ошибка: Путь {target_dir} не существует.")
-        raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
+         raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
         
 
     total_files = 0 # счетчик файлов
@@ -39,6 +39,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         count_files(sys.argv[1])
     else:
-        print("Используйте: python cli.py  <имя_папки>")
+        logging.warning("Используйте: python cli.py  <имя_папки>")
 
 

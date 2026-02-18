@@ -25,7 +25,8 @@ def copy_file(filename):
     file_path = os.path.join(base_path, filename)
     # Объединяем  директорию  с именем файла, чтобы получить полный путь
 
-    # Проверяем, существует ли указанный файл по данному пути
+    # Проверяем, существует ли указанный файл по данному 
+    
     if not os.path.exists(file_path):
         # Если файла нет, выводим сообщение и завершаем функцию
         logging.warning(f"Файл {filename} не найден в {base_path}")
@@ -70,6 +71,6 @@ if __name__ == "__main__":
         copy_file(filename)
     except ValueError as e:
         # Если аргументов меньше 2 (скрипт, имя файла), выводим инструкцию
-        # e = "Ошибка в количестве аргументов. Правильное использование: <python cli_copy_files.py>  <имя_файла>"
+        
         logging.error(e)
         

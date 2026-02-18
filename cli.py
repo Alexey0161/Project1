@@ -1,7 +1,7 @@
 import argparse
 import logging
 # импортируем функцию интерактивного меню из файла main.py
-from src.main import main as start_interactive
+from main import main as start_interactive
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
 

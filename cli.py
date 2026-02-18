@@ -1,5 +1,6 @@
 import argparse
 import logging
+from src.filesystem.cli_copy_files import copy_file
 
 # Настраиваем логирование (как мы с вами учили!)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

@@ -36,5 +36,12 @@ def main():
     elif args.command is None:
         parser.print_help()
 
+def start_menu():
+    print("--- Добро пожаловать в Интерактивный Режим! ---")
+    start_interactive()
+    # Тут  старый код с input(), choice и while True
+    # Это ваша "песочница", ТЗ её не запрещает, если она вызывается отдельно!
+
+
 if __name__ == "__main__":
     main()

@@ -1,9 +1,13 @@
 import argparse
 import logging
+import os
 # импортируем функцию интерактивного меню из файла main.py
 from main import main as start_interactive
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
+from src.filesystem.cli_copy_files import copy_file
+from src.filesystem.cli_cnt_files import count_files
+
 
 # Импортируем модуль логирования
 import logging
@@ -28,6 +32,9 @@ def main():
     copy_p = subparsers.add_parser('copy', help='Скопировать файл')
     copy_p.add_argument('file_name', type=str, help='Имя файла, который нужно найти и скопировать')
 
+    # Команда 3: Счетчик  файлов
+    count_p = subparsers.add_parser('count', help='Посчитать файлы в директории, в том числе и во вложенных папках')
+    count_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно подсчитать количество файлов')
     
     args = parser.parse_args()
     
@@ -36,6 +43,8 @@ def main():
         start_menu()  # Запускаем интерактивное меню!
     elif args.command == 'copy':
         copy_file(args.file_name)
+    elif args.command == 'count':
+        count_files(args.target_dir)
 
     else:
         parser.print_help()

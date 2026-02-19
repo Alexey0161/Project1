@@ -3,14 +3,15 @@ import sys
 import logging
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
+from src.filesystem.cli_cnt_files import count_files
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
     print("Выберите действие:")
     print("1. Запустить копировальщик файлов")
-    print("2. Запустить счетчик файлов")
-    print("3. Запустить поисковик файлов")
-    print("4. Запустить установщик даты в имя файла")
+    print("3. Запустить счетчик файлов")
+    print("4. Запустить поисковик файлов")
+    print("5. Запустить установщик даты в имя файла")
 
     choice = input("Введите номер: ")
     if choice == "1":
@@ -21,7 +22,14 @@ def main():
         except Exception as e:
                 
                 print(e)
-
+    if choice == "3":
+        print('----Запускает счетчик файлов ----')
+        try:
+            target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
+            count_files(target_dir)
+        except Exception as e:
+                
+                print(e)
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":
     try:

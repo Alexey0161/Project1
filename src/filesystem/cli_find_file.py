@@ -12,20 +12,34 @@ import logging
 
 def find_file(target_dir, size):
     target_dir = os.path.normpath(target_dir)
-    limit_size = int(size) * 1024 #преобразуем кбайты в байты
+    limit_size = None
+    try:
+        limit_size = float(size) * 1024 #преобразуем кбайты в байты
+    except (ValueError, TypeError):
+        print('Вводимое значение должно содержать только цифры')
+        
     t = [] # создаем список для файлов, которые прошли фильтр
-    for r, d, f in os.walk(target_dir):
-        for i in f: # f - walk выдает файлы в виде списка
+    if  os.path.exists(target_dir): # через if защищаем код, от падения, если пути не сущенствует
+                
+        for r, d, f in os.walk(target_dir):
+            for i in f: # f - walk выдает файлы в виде списка
 
-            path_i = os.path.join(r,i) # соединяем черз инструмент path
-                                       # путь и имя файла
-            if os.path.isfile(path_i):
+                path_i = os.path.join(r,i) # соединяем черз инструмент path
+                                        # путь и имя файла
+                if os.path.isfile(path_i):
 
-                full_size = os.path.getsize(path_i)
+                    full_size = os.path.getsize(path_i)
 
-                if full_size < limit_size:
-                    t.append(i)
-                    logging.info(f'Найден файл: {i} {full_size / 1024: .2f}')
+                    if  limit_size is not None:
+                        if full_size < limit_size:
+                            t.append(i)
+                            logging.info(f'Найден файл: {i} {full_size / 1024: .2f}')
+                    else:
+                        return
+                         
+    else: 
+        raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
+        
     return t
 
 

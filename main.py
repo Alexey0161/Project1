@@ -4,6 +4,7 @@ import logging
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_cnt_files import count_files
+from src.filesystem.cli_find_file import find_file
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
@@ -30,6 +31,16 @@ def main():
         except Exception as e:
                 
                 print(e)
+    if choice == "4":
+        print('----Запускает поисковик файлов ----')
+        try:
+            target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
+            size = input('Введите значение размера, меньше которого будет размер найденных файлов: ')
+            find_file(target_dir, size)
+        except Exception as e:
+                
+                print(e)
+
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":
     try:

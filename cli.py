@@ -3,10 +3,12 @@ import logging
 import os
 # импортируем функцию интерактивного меню из файла main.py
 from main import main as start_interactive
+
 # импортируем функции фичей из соответствующих файлов
-from src.filesystem.cli_copy_files import copy_file
+
 from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_cnt_files import count_files
+from src.filesystem.cli_find_file import find_file
 
 
 # Импортируем модуль логирования
@@ -36,6 +38,12 @@ def main():
     count_p = subparsers.add_parser('count', help='Посчитать файлы в директории, в том числе и во вложенных папках')
     count_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно подсчитать количество файлов')
     
+    # Команда 3: Поисковик файлов
+    find_p = subparsers.add_parser('find', help='Найти файлы, которые по размеру меньше заданного критерия, в выбранной  директории, в том числе и во вложенных папках')
+    find_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно найти файлы')
+    find_p.add_argument('size', type=str, help='Значение размера файла  в килобайтах, которое задается, как критерий поиска файлов ')
+    
+    
     args = parser.parse_args()
     
         # ЛОГИКА ВЫБОРА
@@ -45,7 +53,11 @@ def main():
         copy_file(args.file_name)
     elif args.command == 'count':
         count_files(args.target_dir)
-
+    elif args.command == 'find':
+        try:
+            find_file(args.target_dir, args.size)
+        except Exception as e:
+            print(e)
     else:
         parser.print_help()
 

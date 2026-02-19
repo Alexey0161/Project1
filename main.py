@@ -30,7 +30,7 @@ def main():
             count_files(target_dir)
         except Exception as e:
                 
-                print(e)
+                logging.error(e)
     if choice == "4":
         print('----Запускает поисковик файлов ----')
         try:
@@ -39,7 +39,7 @@ def main():
             find_file(target_dir, size)
         except Exception as e:
                 
-                print(e)
+                logging.error(e)
 
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":

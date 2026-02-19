@@ -8,7 +8,7 @@
 ```powershell
 python cli.py copy <имя_файла>
 к примеру:
-python cli.py copy test.txt
+python cli.py copy test.txt 
 
 **Запуск через интерактивное меню:**
 

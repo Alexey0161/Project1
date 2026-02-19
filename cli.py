@@ -52,12 +52,15 @@ def main():
     elif args.command == 'copy':
         copy_file(args.file_name)
     elif args.command == 'count':
-        count_files(args.target_dir)
+        try:
+            count_files(args.target_dir)
+        except Exception as e:
+            logging.error(e)
     elif args.command == 'find':
         try:
             find_file(args.target_dir, args.size)
         except Exception as e:
-            print(e)
+            logging.error(e)
     else:
         parser.print_help()
 

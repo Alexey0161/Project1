@@ -4,7 +4,7 @@ import sys
 # Или просто перенесем код из main.py в функцию start_menu()
 from src.calculator import add
 from src.filesystem.cli_cnt_files import count_files
-from src.filesystem.cli_modif_files_2 import process_logic
+from src.filesystem.cli_modif_files import process_logic
 from src.main import main as start_interactive
 from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_copy_files import copy_file

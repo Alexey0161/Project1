@@ -1,6 +1,7 @@
 import argparse
 import logging
-import os
+import sys
+
 # импортируем функцию интерактивного меню из файла main.py
 from main import main as start_interactive
 
@@ -9,6 +10,7 @@ from main import main as start_interactive
 from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_find_file import find_file
+from src.filesystem.cli_modif_files import process_logic
 
 
 # Импортируем модуль логирования
@@ -43,8 +45,19 @@ def main():
     find_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно найти файлы')
     find_p.add_argument('size', type=str, help='Значение размера файла  в килобайтах, которое задается, как критерий поиска файлов ')
     
+    # Команда 4: Модификатор имени файлов
+    modif_p = subparsers.add_parser('modif', help='Добавить в имя файла дату создания')
+    modif_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно модифицировать имена файлов')
+    modif_p.add_argument('--recursive', action='store_true' ,  help='Параметр, указывющий, что измениять надо в том чилсе файлы во вложенных папках')
+
+    try:
+        args = parser.parse_args()
+        
+    except SystemExit:
+    # Аргпарс сам выводит ошибку и вызывает sys.exit()
     
-    args = parser.parse_args()
+        print("Ошибка: Пользватель, Вы ввели что-то не то. Проверьте корректность ввода флагов (Правильно:--recursive)!")
+        sys.exit(1)
     
         # ЛОГИКА ВЫБОРА
     if args.command == 'menu':
@@ -61,6 +74,13 @@ def main():
             find_file(args.target_dir, args.size)
         except Exception as e:
             logging.error(e)
+    elif args.command == 'modif':
+        
+        try:
+            process_logic(args.target_dir, args.recursive)
+        except Exception as e:
+            logging.error(e)
+    
     else:
         parser.print_help()
 

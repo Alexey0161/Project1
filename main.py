@@ -5,6 +5,8 @@ import logging
 from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_find_file import find_file
+from src.filesystem.cli_modif_files import process_logic
+
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
@@ -37,6 +39,15 @@ def main():
             target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
             size = input('Введите значение размера, меньше которого будет размер найденных файлов: ')
             find_file(target_dir, size)
+        except Exception as e:
+                
+                logging.error(e)
+    if choice == "5":
+        print('----Запускает установщик даты в имя файла ----')
+        try:
+            target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
+            recursive = input('Введите параметр для вложенных папок "--recursive": ')
+            process_logic(target_dir, recursive=None)
         except Exception as e:
                 
                 logging.error(e)

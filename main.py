@@ -47,7 +47,7 @@ def main():
         try:
             target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
             recursive = input('Введите параметр для вложенных папок "--recursive": ')
-            process_logic(target_dir, recursive=None)
+            process_logic(target_dir, recursive)
         except Exception as e:
                 
                 logging.error(e)

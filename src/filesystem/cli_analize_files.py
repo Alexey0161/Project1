@@ -3,7 +3,7 @@ import logging
 import argparse
 
 def calculate_everything(path):
-    # cnt = 0
+    
     total = 0
     # создаем словарь для вложенных папок и их размеров
     dict_for_dir = {}
@@ -13,7 +13,7 @@ def calculate_everything(path):
     first_step = next(walk)
     root_first, dirs_first, files_first = first_step
     if len(dirs_first) != 0:
-        # # Собираем словарь с ключами в виде названий вложенных папок
+        #  Собираем словарь с ключами в виде названий вложенных папок
         for i in dirs_first:
             i_p = os.path.join(root_first, i)
             dict_for_dir[i_p] = [0]
@@ -26,6 +26,9 @@ def calculate_everything(path):
             j_p = os.path.join(root_first, j)
             # вычисляем размер файла 
             size_dir_file = os.path.getsize(j_p)
+            # добавляем размер файлов, находящихся в корне директории 
+            # к общему размеру директории
+            total += size_dir_file
             # собираем словарь, в котором ключи - названия файлов, значения - размер файлов в байтах
             dict_for_dirfiles[j] = size_dir_file
     

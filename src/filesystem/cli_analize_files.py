@@ -2,52 +2,66 @@ import os
 import logging
 import argparse
 
-def calculate_everything(path):
+#  собираем вспомогательную функцию для поиска ключа по пути к файлу
+def find_folder_file(folder_path,file_path):
+    file_path_norm = os.path.normpath(file_path)
+    folder_path_norm = os.path.normpath(folder_path)
+    file_parts = file_path_norm.split(os.sep)
+    folder_parts = folder_path_norm.split(os.sep)
+    file_parts_folder = file_parts[ : len(folder_parts)]
+    rel_path_file_folder = os.sep.join(file_parts_folder)
     
+    return rel_path_file_folder
+       
+def calculate_everything(path):
     total = 0
     # создаем словарь для вложенных папок и их размеров
     dict_for_dir = {}
     # создаем словарь для файлов, находящихся в корне директорий
     dict_for_dirfiles = {}
-    walk = os.walk(path)
-    first_step = next(walk)
-    root_first, dirs_first, files_first = first_step
-    if len(dirs_first) != 0:
-        #  Собираем словарь с ключами в виде названий вложенных папок
-        for i in dirs_first:
-            i_p = os.path.join(root_first, i)
-            dict_for_dir[i_p] = [0]
-    # проверяем есть ли в корне директории файлы:
-    if len(files_first) != 0:
-        # собираем словарь из файлов директории: ключ - имя файла, значение - размер файла
-        
-        for j in files_first:
-            # собираем полный путь к файлу из пути к директории + имя файла
-            j_p = os.path.join(root_first, j)
-            # вычисляем размер файла 
-            size_dir_file = os.path.getsize(j_p)
-            # добавляем размер файлов, находящихся в корне директории 
-            # к общему размеру директории
-            total += size_dir_file
-            # собираем словарь, в котором ключи - названия файлов, значения - размер файлов в байтах
-            dict_for_dirfiles[j] = size_dir_file
-    
-    for root, dirs, files in walk:
+    # создаем общий словарь total_dict для вывода из функции одного отчета, словарь
+        ### содержит ключи total - общий размер директории
+        ### ключ dict_for_dir - вложенный словарь для вложенных папок и их значений их размеров
+        ### ключ dict_for_dirfiles - вложенный словарь для имен файлов, внутри директории и их размеров
+    total_dict = {}
+     # создаем в словаре dict_for_dir ключ dirs  - и значение - вложенный словарь из 
+    #  с ключами - имена вложенных папок, значения - размер папок 
+    for root, dirs, files in os.walk(path):
+        if root == path:
+            # собираем словарь файлов, находящихся в корне директории
+            for f in files:
+                    fp = os.path.join(root, f)
+                    size_file = os.path.getsize(fp)
+                    total += size_file # прибавляе размер файла внутри директории к общему размеру директории
+                    # добавляем  в словарь  dict_for_dirfiles,  вложенный в словарь total_dict, файлы и их размеры
+                    dict_for_dirfiles[f] = size_file
+            for folder in dirs:
+                # собираем путь к корневым папкам
+                folder_path = os.path.join(root, folder)
+                # собираем ключи слолваря dict_for_dir
+                dict_for_dir[folder_path] = 0
 
-        for f in files:
-            fp = os.path.join(root, f)
-            size_file = os.path.getsize(fp)
-            total += size_file
-            for j in dict_for_dir.keys():
-                if j in root:
-                    # формируем словарь, в котором ключами будут имена вложенных папок 
-                    dict_for_dir[j].append(size_file)
-    # суммируем значения размеров файлов в папках по ключам, которыми являются имена папок
-    for k in dict_for_dir.keys():
-        dict_for_dir[k] = sum(dict_for_dir[k])
-
-
-    return total, dict_for_dir, dict_for_dirfiles
+        else:
+            # проверяем, что в подпапке есть файлы
+            if files:
+                file_path = os.path.join(root, files[0])
+                
+                # определяем ключ родильтельской папки словаря dict_for_dir
+                current_parent_key = find_folder_file(folder_path, file_path)
+                for f in files:
+                    fp = os.path.join(root, f)
+                    size_file = os.path.getsize(fp)
+                    total += size_file
+                    dict_for_dir[current_parent_key] += size_file
+   # добавляем в словарь dict_for_dir:
+        #  переменную ключ - переменная total, значение - полный объем директории, 
+        # посчитанный в total
+    total_dict['total'] = total
+        # вложенный словарь в качестве ключа название dict_for_dirfiles: 
+        # значения - содержания словаря, то есть имена файлов и их размер
+    total_dict['dict_for_dirfiles'] = dict_for_dirfiles
+    total_dict['dict_for_dir'] = dict_for_dir
+    return total_dict
 
 def format_size(size_bytes):
     # Определяем пороги для перехода на следующую единицу
@@ -65,33 +79,40 @@ def format_size(size_bytes):
 
 # Основной алгоритм анализе:
 def analize_files(root_path):
+
     root_path = os.path.normpath(root_path)
     if not os.path.exists(root_path): # через if защищаем код, от падения, если пути не сущенствует
         
             raise FileNotFoundError(f"Ошибка: Путь {root_path} не существует.")
     else:
-        result = calculate_everything(root_path)# вызываю функцию get_dir_size один раз!!!!
-        full_size = result[0]
-        dict_for_dir = result[1]
 
-        dict_for_dirfiles = result[2]
+        # Распаковка единого отчета по составляющим
+        total_dict = calculate_everything(root_path)# вызываю функцию get_dir_size один раз!!!!
+        full_size = total_dict['total']
+        dict_for_dir = total_dict['dict_for_dir']
+        dict_for_dirfiles = total_dict['dict_for_dirfiles']
+        
+        
         # выводим полный размер директории
+     
         print(f'full size: {format_size(full_size):>20}')
         
-        # проверяем есть ли в директории вложенные папки 
-        if len(dict_for_dir) != 0: 
+        #  проверяем есть ли в директории вложенные папки 
+        if dict_for_dir: 
             for key, value in dict_for_dir.items():
                 #  вырезаем из пути к папке:key имя папки для читаемого отображения 
-                #   в выводе
+                    ###   в выводе
                 name_folder = os.path.basename(key)
                 #   выводим по установленной форме имя вложенной папки и размер, через 
-                #   функцию format_size переведенных в kb, mb, gb и т.п.
+                    ###   функцию format_size переведенных в kb, mb, gb и т.п.
+               
                 print(f'-folder: {name_folder:<10}  {format_size(value):>10}')
-        # проверяем есть ли в директории вложенные файлы
-        if len(dict_for_dirfiles) != 0:
+        #  проверяем есть ли в КОРНЕ директории вложенные файлы
+        if dict_for_dirfiles:
             for key, value in dict_for_dirfiles.items():
                 #   выводим по установленной форме имя вложенной папки и размер, через 
                 #   функцию format_size переведенных в kb, mb, gb и т.п.
+              
                 print(f'-file: {key:<10} {format_size(value):>10}')
 
 

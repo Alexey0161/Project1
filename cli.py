@@ -11,7 +11,11 @@ from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
-
+from src.filesystem.cli_analize_files import analize_files
+# from src.filesystem.cli_analize_files import find_folder_file
+# from src.filesystem.cli_analize_files import calculate_everything
+# from src.filesystem.cli_analize_files import format_size
+# 
 
 # Импортируем модуль логирования
 import logging
@@ -50,6 +54,11 @@ def main():
     modif_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно модифицировать имена файлов')
     modif_p.add_argument('--recursive', action='store_true' ,  help='Параметр, указывющий, что измениять надо в том чилсе файлы во вложенных папках')
 
+     # Команда 5: Анализатор директорий
+    analize_p = subparsers.add_parser('analize', help='Вывести информаию о размерах директории и вложенных папок и файлов') 
+    analize_p. add_argument('root_path', type=str, help='Полный путь к директории для анализа')
+     
+     
     try:
         args = parser.parse_args()
         
@@ -80,7 +89,12 @@ def main():
             process_logic(args.target_dir, args.recursive)
         except Exception as e:
             logging.error(e)
-    
+            
+    elif args.command == 'analize':
+        try:
+            analize_files(args.root_path)
+        except Exception as e:
+            logging.error(e)
     else:
         parser.print_help()
 

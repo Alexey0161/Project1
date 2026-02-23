@@ -6,6 +6,7 @@ from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
+from src.filesystem.cli_analize_files import analize_files
 
 
 def main():
@@ -15,6 +16,7 @@ def main():
     print("3. Запустить счетчик файлов")
     print("4. Запустить поисковик файлов")
     print("5. Запустить установщик даты в имя файла")
+    print("6. Запустить анализатор директорий")
 
     choice = input("Введите номер: ")
     if choice == "1":
@@ -49,8 +51,16 @@ def main():
             recursive = input('Введите параметр для вложенных папок "--recursive": ')
             process_logic(target_dir, recursive)
         except Exception as e:
+            logging.error(e)
+        
+    if choice == "6":
+        print('----Запускает анализатор директории ----')                
+        try:
+            root_path = input(' Введите полный путь к директории, выбранной для анализа: ')
+            analize_files(root_path)
+        except Exception as e:
+            logging.error(e)
                 
-                logging.error(e)
 
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":

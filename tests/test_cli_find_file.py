@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from cli_find_file import find_file
+from src.filesystem.cli_find_file import find_file
+
 
 
 def test_find_file(tmp_path, capsys):

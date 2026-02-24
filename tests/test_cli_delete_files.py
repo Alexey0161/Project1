@@ -1,11 +1,6 @@
 
 from pathlib import Path
 
-path = Path('путь/к/вашему/объекту')
-
-assert not path.exists()
-
-
 
 from src.filesystem.cli_delete_files import delete_path
 

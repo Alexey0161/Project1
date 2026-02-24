@@ -61,6 +61,7 @@ def calculate_everything(path):
         # значения - содержания словаря, то есть имена файлов и их размер
     total_dict['dict_for_dirfiles'] = dict_for_dirfiles
     total_dict['dict_for_dir'] = dict_for_dir
+    print(total_dict, 64)
     return total_dict
 
 def format_size(size_bytes):

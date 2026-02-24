@@ -12,10 +12,7 @@ from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
 from src.filesystem.cli_analize_files import analize_files
-# from src.filesystem.cli_analize_files import find_folder_file
-# from src.filesystem.cli_analize_files import calculate_everything
-# from src.filesystem.cli_analize_files import format_size
-# 
+from src.filesystem.cli_delete_files import delete_path
 
 # Импортируем модуль логирования
 import logging
@@ -40,6 +37,12 @@ def main():
     copy_p = subparsers.add_parser('copy', help='Скопировать файл')
     copy_p.add_argument('file_name', type=str, help='Имя файла, который нужно найти и скопировать')
 
+    
+    # Команда 2: Удалитель папок и файлов
+    copy_p = subparsers.add_parser('delete', help='Удалить папку или файл')
+    copy_p.add_argument('target_path', type=str, help='Путь к папке или  файлу, которые нужно удалить')
+
+    
     # Команда 3: Счетчик  файлов
     count_p = subparsers.add_parser('count', help='Посчитать файлы в директории, в том числе и во вложенных папках')
     count_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно подсчитать количество файлов')
@@ -73,6 +76,11 @@ def main():
         start_menu()  # Запускаем интерактивное меню!
     elif args.command == 'copy':
         copy_file(args.file_name)
+    elif args.command == 'delete':
+        try:
+            delete_path(args.target_path)
+        except Exception as e:
+            logging.error(e)
     elif args.command == 'count':
         try:
             count_files(args.target_dir)

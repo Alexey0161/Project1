@@ -7,12 +7,13 @@ from src.filesystem.cli_cnt_files import count_files
 from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
 from src.filesystem.cli_analize_files import analize_files
-
+from src.filesystem.cli_delete_files import delete_path
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
     print("Выберите действие:")
     print("1. Запустить копировальщик файлов")
+    print("2. Запустить удалитель папок и файлво")
     print("3. Запустить счетчик файлов")
     print("4. Запустить поисковик файлов")
     print("5. Запустить установщик даты в имя файла")
@@ -27,6 +28,17 @@ def main():
         except Exception as e:
                 
                 print(e)
+    
+    if choice == "2":
+        print('----Запускает удалитель папок и  файлов ----')
+        try:
+            target_path = input('Введите путь: ')
+            delete_path(target_path)
+        except Exception as e:
+                
+                print(e)
+    
+    
     if choice == "3":
         print('----Запускает счетчик файлов ----')
         try:
@@ -38,7 +50,7 @@ def main():
     if choice == "4":
         print('----Запускает поисковик файлов ----')
         try:
-            target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
+            target_dir = input('Введите полный путь к директории, в который надо найти файлы, размер которых меньше заданного в командной строке значения: ')
             size = input('Введите значение размера, меньше которого будет размер найденных файлов: ')
             find_file(target_dir, size)
         except Exception as e:
@@ -47,7 +59,7 @@ def main():
     if choice == "5":
         print('----Запускает установщик даты в имя файла ----')
         try:
-            target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
+            target_dir = input('Введите полный путь к директории, в который надо добавить дату создания файла к имени: ')
             recursive = input('Введите параметр для вложенных папок "--recursive": ')
             process_logic(target_dir, recursive)
         except Exception as e:

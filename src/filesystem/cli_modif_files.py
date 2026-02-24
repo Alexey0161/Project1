@@ -47,11 +47,14 @@ def process_logic(root_path, recursive=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Добавляет дату к именам файлов")
+    parser.add_argument("command", choices=["modif"], help="Команда для выполнения.")
     parser.add_argument("path", help="Путь к папке")
+    
     parser.add_argument("--recursive", action="store_true", help="Обходить вложенные папки")
     
     args = parser.parse_args()
     try:
-        process_logic(args.path, args.recursive)
+        if args.command == "modif":
+            process_logic(args.path, args.recursive)
     except Exception as e:
         logging.error(e)

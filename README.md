@@ -18,14 +18,14 @@ python cli.py copy test.txt
 В открывшемся окне: 'Введите имя файла, который надо скопировать: '
 введите имя файла, к примеру test.txt
 
-### 2. Копирование файлов
+### 2. Удаление папок файлов
 Команда позволяет папку или файл по указанному пути.
 
 **Запуск через CLI:**
 ```powershell
 python cli.py delete <путь к папке или файлу>
 к примеру:
-python cli.py delete "C:\Users\ivano\Desktop\Project1\Total1"  
+python cli.py delete C:\Users\ivano\Desktop\Project1\Total1 
 
 **Запуск через интерактивное меню:**
 

@@ -2,8 +2,8 @@ import argparse
 import logging
 import sys
 
-# импортируем функцию интерактивного меню из файла main.py
-from main import main as start_interactive
+# # импортируем функцию интерактивного меню из файла main.py
+# from main import main as start_interactive
 
 # импортируем функции фичей из соответствующих файлов
 
@@ -83,7 +83,7 @@ def main():
             logging.error(e)
     elif args.command == 'count':
         try:
-            count_files(args.target_dir)
+            return count_files(args.target_dir)
         except Exception as e:
             logging.error(e)
     elif args.command == 'find':
@@ -107,6 +107,8 @@ def main():
         parser.print_help()
 
 def start_menu():
+    # импортируем функцию интерактивного меню из файла main.py
+    from main import main as start_interactive
     print("--- Добро пожаловать в Интерактивный Режим! ---")
     start_interactive()
     # Тут  старый код с input(), choice и while True

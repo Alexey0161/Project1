@@ -33,6 +33,7 @@ def count_files(target_dir):
         total_files += len(files)  # Прибавляем количество файлов в текущей папке
 
     print(f"Всего файлов в '{target_dir}' (включая вложенные): {total_files}")
+    return total_files
 
 if __name__ == "__main__":
     # Простая проверка команды
@@ -41,4 +42,5 @@ if __name__ == "__main__":
     else:
         logging.warning("Используйте: python cli.py  <имя_папки>")
 
+# print(count_files(r'C:\Users\ivano\Desktop\Project1\Total1'))
 

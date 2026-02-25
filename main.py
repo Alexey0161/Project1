@@ -8,6 +8,7 @@ from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
 from src.filesystem.cli_analize_files import analize_files
 from src.filesystem.cli_delete_files import delete_path
+from src.filesystem.cli_star_ficha import star_ficha
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
@@ -18,6 +19,7 @@ def main():
     print("4. Запустить поисковик файлов")
     print("5. Запустить установщик даты в имя файла")
     print("6. Запустить анализатор директорий")
+    print("7. Запустить ЗВЕЗДНЫЙ анализатор директорий")
 
     choice = input("Введите номер: ")
     if choice == "1":
@@ -72,7 +74,13 @@ def main():
             analize_files(root_path)
         except Exception as e:
             logging.error(e)
-                
+    if choice == "7":
+        print('----Запускает ЗВЕЗДНЫЙ анализатор директории ----')                
+        try:
+            root_path = input(' Введите полный путь к директории, выбранной для анализа: ')
+            star_ficha(root_path)
+        except Exception as e:
+            logging.error(e)               
 
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":

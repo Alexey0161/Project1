@@ -13,6 +13,7 @@ from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
 from src.filesystem.cli_analize_files import analize_files
 from src.filesystem.cli_delete_files import delete_path
+from src.filesystem.cli_star_ficha import star_ficha
 
 # Импортируем модуль логирования
 import logging
@@ -47,19 +48,23 @@ def main():
     count_p = subparsers.add_parser('count', help='Посчитать файлы в директории, в том числе и во вложенных папках')
     count_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно подсчитать количество файлов')
     
-    # Команда 3: Поисковик файлов
+    # Команда 4: Поисковик файлов
     find_p = subparsers.add_parser('find', help='Найти файлы, которые по размеру меньше заданного критерия, в выбранной  директории, в том числе и во вложенных папках')
     find_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно найти файлы')
     find_p.add_argument('size', type=str, help='Значение размера файла  в килобайтах, которое задается, как критерий поиска файлов ')
     
-    # Команда 4: Модификатор имени файлов
+    # Команда 5: Модификатор имени файлов
     modif_p = subparsers.add_parser('modif', help='Добавить в имя файла дату создания')
     modif_p.add_argument('target_dir', type=str, help='Полный путь с Название директории в которой нужно модифицировать имена файлов')
     modif_p.add_argument('--recursive', action='store_true' ,  help='Параметр, указывющий, что измениять надо в том чилсе файлы во вложенных папках')
 
-     # Команда 5: Анализатор директорий
+     # Команда 6: Анализатор директорий
     analize_p = subparsers.add_parser('analize', help='Вывести информаию о размерах директории и вложенных папок и файлов') 
     analize_p. add_argument('root_path', type=str, help='Полный путь к директории для анализа')
+     
+          # Команда 6: Анализатор директорий
+    star_p = subparsers.add_parser('star', help='Вывести звездную информаию о размерах директории и вложенных папок и файлов') 
+    star_p. add_argument('root_path', type=str, help='Полный путь к директории для анализа')
      
      
     try:
@@ -101,6 +106,12 @@ def main():
     elif args.command == 'analize':
         try:
             analize_files(args.root_path)
+        except Exception as e:
+            logging.error(e)
+    
+    elif args.command == 'star':
+        try:
+            star_ficha(args.root_path)
         except Exception as e:
             logging.error(e)
     else:

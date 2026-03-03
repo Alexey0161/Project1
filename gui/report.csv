@@ -1,0 +1,25 @@
+РЕЗУЛЬТАТ
+full size:            323.41 MB
+-folder: .git         305.87 KB amounts to 0.09%
+-folder: .pytest_cache     1.96 KB amounts to 0.0%
+-folder: .ruff_cache     1.46 KB amounts to 0.0%
+-folder: gui           12.55 KB amounts to 0.0%
+-folder: my_super_project.egg-info   774 bytes amounts to 0.0%
+-folder: my_venv      322.94 MB amounts to 99.85%
+-folder: src           76.15 KB amounts to 0.02%
+-folder: tests         44.30 KB amounts to 0.01%
+-folder: Total          2.77 KB amounts to 0.0%
+-folder: Total1       411 bytes amounts to 0.0%
+-folder: __pycache__    13.22 KB amounts to 0.0%
+-file: .gitignore    4.67 KB amounts to 0.0%
+-file: chernovik.py  382 bytes amounts to 0.0%
+-file: cli.py        6.77 KB amounts to 0.0%
+-file: debug.log    14 bytes amounts to 0.0%
+-file: errors.log   16 bytes amounts to 0.0%
+-file: main.py       4.69 KB amounts to 0.0%
+-file: README.md     8.06 KB amounts to 0.0%
+-file: requirements.txt   28 bytes amounts to 0.0%
+-file: test.txt      0 bytes amounts to 0.0%
+-file: test_copy.txt    0 bytes amounts to 0.0%
+-file: __init__.py    0 bytes amounts to 0.0%
+""

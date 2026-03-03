@@ -1,10 +1,14 @@
-import os
+import flet as ft
 
-path = r'C:\Users\ivano\Desktop\Project1\Total'
-# path = os.path.normpath(path)
-# for root, dirs, files in os.walk(path):
-#     if root == path:
-#         print(root, dirs, files, path)
 
-full_path = os.path.abspath('proba.txt')
-print(full_path)
+def main(page: ft.Page):
+    username = ft.TextField(label="Username", hint_text="Enter your username")
+    password = ft.TextField(label="Password", password=True, can_reveal_password=True)
+
+    def btn_click(e):
+        print(f"Logging in: {username.value}")
+
+    page.add(username, password, ft.Button("Login", on_click=btn_click))
+
+
+ft.run(main)

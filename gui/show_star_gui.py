@@ -4,8 +4,9 @@ import os
 import logging
 from logic_save_to_csv import save_to_csv
 from src.filesystem.cli_star_ficha import star_ficha
+from chek_path import chek
 
-def main(page: ft.Page):  
+def star_gui(page: ft.Page):  
     
 # 1. Настройка "холста"
     page.title = "Анализатор" 
@@ -42,22 +43,33 @@ def main(page: ft.Page):
 
 ### 2.2.  Функция Кнопки, которая ВВОД:
     def on_button_click_1(e): # Ввод
-        
-        # 2. Обновляем текст
-        hello_text.value = 'Нажмите кнопку\nЗапуск Анализатора'
-        hello_text.color = "green"
-                
-        #делаем невидимыми поле для ввода пути и кнопку Ввод
-        text_path.visible = False
-        btn1.visible = False
-        # делаем видимым кнопку  Запуск Анализатора
-        btn.visible = True
-        # после нажатия на кнопку "Ввод" делаем невидимой кнопку Выбора папкиЖ
-        btn_select.visible = False
-        page.update()
-       
+                       
         path = os.path.normpath(str(text_path.value))
-        page.session.set('result', path)
+        
+        try:
+            real_path = chek(path)
+   
+            text_path.helper_text = "✅ Путь успешно выбран"
+            page.session.set('result', real_path)
+            hello_text.value = 'Нажмите кнопку\nЗапуск Анализатора'
+            hello_text.color = "green"
+                    
+            #делаем невидимыми поле для ввода пути и кнопку Ввод
+            text_path.visible = False
+            btn1.visible = False
+            # делаем видимым кнопку  Запуск Анализатора
+            btn.visible = True
+            # после нажатия на кнопку "Ввод" делаем невидимой кнопку Выбора папкиЖ
+            btn_select.visible = False
+        except Exception as e: 
+            
+            hello_text.value= "⚠️ Ошибка в имени пути. Проверьте выбор"
+            hello_text.color = "yellow"
+            text_path.helper_text = "⚠️ Проверьте правильность ввода пути"
+            text_path.helper_style = ft.TextStyle(color="red")
+            
+    
+        page.update()
 
 ### 2.3.  Кнопки Запуска Анализа:
     ## формируем контейнер для сбора данных в полосе прокрутки
@@ -178,7 +190,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     try:
-     ft.app(target=main)
+     ft.app(target=star_gui)
     except Exception as e:
         logging.error(e)
 

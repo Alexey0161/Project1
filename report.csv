@@ -1,9 +1,9 @@
 РЕЗУЛЬТАТ
-full size:            323.42 MB
--folder: .git         316.70 KB amounts to 0.1%
+full size:            323.43 MB
+-folder: .git         322.41 KB amounts to 0.1%
 -folder: .pytest_cache     1.96 KB amounts to 0.0%
 -folder: .ruff_cache     1.46 KB amounts to 0.0%
--folder: gui           14.46 KB amounts to 0.0%
+-folder: gui           17.40 KB amounts to 0.01%
 -folder: my_super_project.egg-info   774 bytes amounts to 0.0%
 -folder: my_venv      322.94 MB amounts to 99.85%
 -folder: src           76.15 KB amounts to 0.02%

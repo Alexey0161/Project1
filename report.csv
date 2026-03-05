@@ -1,11 +1,11 @@
 РЕЗУЛЬТАТ
-full size:            323.43 MB
--folder: .git         322.41 KB amounts to 0.1%
+full size:            323.46 MB
+-folder: .git         329.29 KB amounts to 0.1%
 -folder: .pytest_cache     1.96 KB amounts to 0.0%
 -folder: .ruff_cache     1.46 KB amounts to 0.0%
--folder: gui           17.40 KB amounts to 0.01%
+-folder: gui           35.90 KB amounts to 0.01%
 -folder: my_super_project.egg-info   774 bytes amounts to 0.0%
--folder: my_venv      322.94 MB amounts to 99.85%
+-folder: my_venv      322.94 MB amounts to 99.84%
 -folder: src           76.15 KB amounts to 0.02%
 -folder: tests         44.30 KB amounts to 0.01%
 -folder: Total          2.77 KB amounts to 0.0%
@@ -18,8 +18,9 @@ full size:            323.43 MB
 -file: errors.log   16 bytes amounts to 0.0%
 -file: main.py       4.69 KB amounts to 0.0%
 -file: README.md     8.06 KB amounts to 0.0%
--file: report.csv    1.16 KB amounts to 0.0%
+-file: report.csv    1.20 KB amounts to 0.0%
 -file: requirements.txt   56 bytes amounts to 0.0%
+-file: run_gui.py    1.45 KB amounts to 0.0%
 -file: test.txt      0 bytes amounts to 0.0%
 -file: test_copy.txt    0 bytes amounts to 0.0%
 -file: __init__.py    0 bytes amounts to 0.0%

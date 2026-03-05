@@ -2,9 +2,10 @@ import argparse
 import flet as ft 
 import os
 import logging
-from logic_save_to_csv import save_to_csv
+from gui.logic.logic_save_to_csv import save_to_csv
 from src.filesystem.cli_star_ficha import star_ficha
-from chek_path import chek
+from gui.logic.chek_path import chek
+
 
 def star_gui(page: ft.Page):  
     
@@ -13,7 +14,7 @@ def star_gui(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
     page.theme_mode = ft.ThemeMode.DARK
     
-    text_path = ft.TextField(label='Путь',   hint_text='Введите путь к директории')
+    text_path = ft.TextField(label='Введите путь к директории ВРУЧНУЮ или ВЫБЕРИТЕ ПАПКУ через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
     hello_text = ft.Text(value = "Анализатор директории готов к работе\nРежим ожидания ввода пути к директории",  size=20, color="blue")
 
@@ -26,7 +27,9 @@ def star_gui(page: ft.Page):
             text_path.value = e.path
             text_path.helper_text = "✅ Путь успешно выбран"
             text_path.helper_style = ft.TextStyle(color="green")
-            
+            hello_text.value = "     Путь выбран\nНажмите кнопку ВВОД"
+            hello_text.color = "red"
+            hello_text.size = 30
             path = os.path.normpath(str(text_path.value))
             page.session.set('result', path)
             
@@ -43,12 +46,10 @@ def star_gui(page: ft.Page):
 
 ### 2.2.  Функция Кнопки, которая ВВОД:
     def on_button_click_1(e): # Ввод
-                       
-        path = os.path.normpath(str(text_path.value))
-        
+
         try:
-            real_path = chek(path)
-   
+            
+            real_path = chek(text_path)
             text_path.helper_text = "✅ Путь успешно выбран"
             page.session.set('result', real_path)
             hello_text.value = 'Нажмите кнопку\nЗапуск Анализатора'
@@ -62,10 +63,11 @@ def star_gui(page: ft.Page):
             # после нажатия на кнопку "Ввод" делаем невидимой кнопку Выбора папкиЖ
             btn_select.visible = False
         except Exception as e: 
-            
-            hello_text.value= "⚠️ Ошибка в имени пути. Проверьте выбор"
+        # Пишем текст по центру экрана для привлечения внимания
+            hello_text.value = e
             hello_text.color = "yellow"
             text_path.helper_text = "⚠️ Проверьте правильность ввода пути"
+            text_path.value = ""
             text_path.helper_style = ft.TextStyle(color="red")
             
     
@@ -143,8 +145,13 @@ def star_gui(page: ft.Page):
         result_container.controls.clear()
         
         page.update()
-      
-### 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
+###  2.6. Собираем функцию Кнопки Домой 
+    def on_home(e):
+        from run_gui import main_show
+        page.clean() # очищаем экран от элементов графики Звездочки
+        main_show(page) # вызываем Главное Меню/Единое окно
+        page.update()      
+## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
 
 ### 3.1. Задание Кнопки "Запуск Анализатора" (функция on_button_click)
     btn = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_button_click,
@@ -170,7 +177,9 @@ def star_gui(page: ft.Page):
         on_click=lambda _: get_directory_dialog.get_directory_path(),
         tooltip="Нажмите, чтобы выбрать папку через проводник Windows" #  тултип
     )  
-
+### 3.6.  Собираем Кнопку Домой     
+    btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
+        tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
     page.add(text_path, ft.Row([btn1, btn_select], spacing=20),
             
@@ -178,10 +187,15 @@ def star_gui(page: ft.Page):
         ft.Row(
             [hello_text],
             alignment=ft.MainAxisAlignment.CENTER
-        ),
-        ft.Row([result_container], alignment=ft.MainAxisAlignment.CENTER)
-
-            ) 
+                ),
+        ft.Row([result_container], alignment=ft.MainAxisAlignment.CENTER),
+        # добавляем кнопку Домой, помещаем ее вниз по вертикали и вправо по горизонтали
+ 
+        ft.Container(
+        content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+        padding=ft.padding.only(right=20, bottom=40) #  "подъемник" на 20 пикселей от края
+    )
+            )
 
 #### 5. Вызов функции 
 if __name__ == "__main__":

@@ -86,10 +86,10 @@ def analize_gui(page: ft.Page):
         try:
             # забираем из page.session путь записанный в функции on_button_click_1
             res = page.session.get('result')
-            print(res, 88)
+            
             # запускаем функцию star_ficha, которую мы импортировали из cli_star_ficha
             fresh_result = analize_files(res)
-            print(fresh_result, 91)
+            
             # собираем  вывод res (общая длинная строка) в список 
             ## из отдельных строк по разделителю '\n'
             res_list = fresh_result.split('\n')
@@ -184,6 +184,7 @@ def analize_gui(page: ft.Page):
     btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
         tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
     btn_home.visible = True
+
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
     page.add(text_path, ft.Row([btn1, btn_select], spacing=20),
             

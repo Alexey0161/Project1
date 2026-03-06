@@ -7,7 +7,7 @@ from gui.show_star_gui import star_gui
 def main_show(page: ft.Page):
     
 # 1. Настройка холста
-    page.title = "Анализатор" 
+    page.title = "ГЛАВНОЕ МЕНЮ/ЕДИНОЕ ОКНО" 
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
     page.theme_mode = ft.ThemeMode.DARK
     hello_text = ft.Text(value = "Главное меню \nВыберите нужную кнопку",  size=20, color="blue")

@@ -136,9 +136,9 @@ def star_ficha(root_path):
                 result += f'-file: {key:<10} {result_str:>10} amounts to {part_size}%\n'
     return result
 
-path = "C:/Users\ivano\Desktop\Project1\Total\Total1"
-path = os.path.normpath(path)
-print(star_ficha(path))
+# path = "C:/Users\ivano\Desktop\Project1\Total\Total1"
+# path = os.path.normpath(path)
+# print(star_ficha(path))
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
     parser.add_argument("path", help="Путь к папке")

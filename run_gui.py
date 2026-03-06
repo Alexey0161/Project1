@@ -1,6 +1,7 @@
 import argparse
 import flet as ft
 import logging
+from gui.show_analize_gui import analize_gui
 from gui.show_star_gui import star_gui
 
 def main_show(page: ft.Page):
@@ -18,14 +19,20 @@ def main_show(page: ft.Page):
         star_gui(page) # Вызываем фичу графики Звездочки
 
         page.update()
+### 2.2. Собираем фичу кнопки запуска Анализа директорий
+    def open_analize_gui(e):
+        page.clean() # очищаем окно от элементов Главного меню
+        analize_gui(page) # Вызываем фичу графики
     page.update()
     
 
 ## 3. Собираем кнопки запуска фичей
 ### 3.1. Собираем кнопку запуск фичи Звездочка
-    btn_star = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_star_gui,
+    btn_star = ft.ElevatedButton("Запуск Звездного анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_star_gui,
+                            tooltip="Кнопка для запуска Звездного Анализа выбранной папки")  
+### 3.2. Собираем кнопку запуска фичи Анализ директорий    
+    btn_analize = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_analize_gui,
                             tooltip="Кнопка для запуска Анализа выбранной папки")  
-
 ## 4. Собираем визуализацию элементов Единого окна
     page.add(#ft.Row([btn1], spacing=20),
             ft.Row(
@@ -33,7 +40,7 @@ def main_show(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER
                    ),
             ft.Container(
-        content=ft.Row([btn_star], alignment=ft.MainAxisAlignment.START),
+        content=ft.Column([btn_star, btn_analize], spacing=20, alignment=ft.MainAxisAlignment.START),
         padding=ft.padding.only(left=20, top=40)
                         )
    

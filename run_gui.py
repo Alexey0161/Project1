@@ -10,7 +10,9 @@ def main_show(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
     page.theme_mode = ft.ThemeMode.DARK
     hello_text = ft.Text(value = "Главное меню \nВыберите нужную кнопку",  size=20, color="blue")
-    
+
+## 2. Собираем функции кнопок запуска фичей
+### 2.1. Собираем фичу кнопки запуска Звездочки    
     def open_star_gui(e):
         page.clean() # очищаем окно от элементов Главного меню
         star_gui(page) # Вызываем фичу графики Звездочки
@@ -19,15 +21,23 @@ def main_show(page: ft.Page):
     page.update()
     
 
-
-    btn1 = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_star_gui,
+## 3. Собираем кнопки запуска фичей
+### 3.1. Собираем кнопку запуск фичи Звездочка
+    btn_star = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_star_gui,
                             tooltip="Кнопка для запуска Анализа выбранной папки")  
 
-    page.add(ft.Row([btn1], spacing=20),
+## 4. Собираем визуализацию элементов Единого окна
+    page.add(#ft.Row([btn1], spacing=20),
             ft.Row(
             [hello_text],
             alignment=ft.MainAxisAlignment.CENTER
-                   )
+                   ),
+            ft.Container(
+        content=ft.Row([btn_star], alignment=ft.MainAxisAlignment.START),
+        padding=ft.padding.only(left=20, top=40)
+                        )
+   
+
             )
 
 ####  Вызов функции 

@@ -193,7 +193,7 @@ def star_gui(page: ft.Page):
  
         ft.Container(
         content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
-        padding=ft.padding.only(right=20, bottom=40) #  "подъемник" на 20 пикселей от края
+        padding=ft.padding.only(right=20, bottom=80) #  "подъемник" на 20 пикселей от края
     )
             )
 

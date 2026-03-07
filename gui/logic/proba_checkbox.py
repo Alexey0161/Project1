@@ -13,7 +13,7 @@ def main(page: ft.Page):
 
     # 2. Создаем элементы
     switch = ft.Switch(label='Рекурсия', value=False, on_change=on_switch_change)
-    btn_start = ft.ElevatedButton(text='Запустить', disabled=True)
+    btn_start = ft.ElevatedButton(text='Запустить', disabled=False)
 
     # 3. Обработчик Кнопки
     def on_button_click(e):

@@ -17,10 +17,10 @@ def main(page: ft.Page):
             print("Запуск без рекурсии")
             
     
-    btn_recursive = ft.Switch('Рекурсия', value=recursive_mode)
-    btn_recursive.on_change = on_checkbox_change
+#     btn_recursive = ft.Switch('Рекурсия', value=recursive_mode)
+#     btn_recursive.on_change = on_checkbox_change
     
-        # добавляем элемент на страницу
-    page.add(btn_recursive)
+#         # добавляем элемент на страницу
+#     page.add(btn_recursive)
 
-ft.app(target=main)
+# ft.app(target=main)

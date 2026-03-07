@@ -4,16 +4,21 @@ from datetime import datetime
 from pathlib import Path
 import logging
 
+
+# logging.basicConfig(
+#     level=logging.INFO,  # или DEBUG, если нужно больше деталей
+#     format='%(asctime)s - %(levelname)s - %(message)s'
+# )
+
 def rename_file_with_date(file_path):
     """Вспомогательная функция для переименования одного файла"""
     try:
         stats = os.stat(file_path)
         formatted_date = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d')
-        
         directory = os.path.dirname(file_path)
         name, ext = os.path.splitext(os.path.basename(file_path))
-        if formatted_date in name:
         
+        if formatted_date in name:
             logging.info(f"Пропуск файла {name}: дата уже присутствует.")
             return
         else:

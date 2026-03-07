@@ -3,9 +3,10 @@ import flet as ft
 import logging
 from gui.show_analize_gui import analize_gui
 from gui.show_star_gui import star_gui
+from gui.show_modif_files import modif_gui
 
 def main_show(page: ft.Page):
-    
+        
 # 1. Настройка холста
     page.title = "ГЛАВНОЕ МЕНЮ/ЕДИНОЕ ОКНО" 
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
@@ -23,16 +24,26 @@ def main_show(page: ft.Page):
     def open_analize_gui(e):
         page.clean() # очищаем окно от элементов Главного меню
         analize_gui(page) # Вызываем фичу графики
-    page.update()
+        page.update()
+
+### 2.3. Собираем фичу кнопки запуска Модификатора файлов
+    def open_modif_gui(e):
+        page.clean() # очищаем окно от элементов Главного меню
+        modif_gui(page) # Вызываем фичу графики
+        page.update()
+    # page.update()
     
 
 ## 3. Собираем кнопки запуска фичей
-### 3.1. Собираем кнопку запуск фичи Звездочка
+### 3.1. Собираем кнопку запуска графики фичи Звездочка
     btn_star = ft.ElevatedButton("Запуск Звездного анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_star_gui,
                             tooltip="Кнопка для запуска Звездного Анализа выбранной папки")  
-### 3.2. Собираем кнопку запуска фичи Анализ директорий    
+### 3.2. Собираем кнопку запуска графики фичи Анализ директорий    
     btn_analize = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_analize_gui,
-                            tooltip="Кнопка для запуска Анализа выбранной папки")  
+                            tooltip="Кнопка для запуска Анализа выбранной папки")
+### 3.3. Собираем кнопку запуска графики фичи  Модификатор файлов
+    btn_modif = ft.ElevatedButton("Запуск Модификатора имени файлов",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_modif_gui,
+                            tooltip="Кнопка для запуска Модификатора имени файлов в  выбранной папке")  
 ## 4. Собираем визуализацию элементов Единого окна
     page.add(#ft.Row([btn1], spacing=20),
             ft.Row(
@@ -40,11 +51,9 @@ def main_show(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER
                    ),
             ft.Container(
-        content=ft.Column([btn_star, btn_analize], spacing=20, alignment=ft.MainAxisAlignment.START),
+        content=ft.Column([btn_star, btn_analize, btn_modif], spacing=20, alignment=ft.MainAxisAlignment.START),
         padding=ft.padding.only(left=20, top=40)
                         )
-   
-
             )
 
 ####  Вызов функции 

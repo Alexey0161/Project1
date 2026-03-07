@@ -17,14 +17,9 @@ def modif_gui(page: ft.Page):
     text_path = ft.TextField(label='ВЫБЕРИТЕ папку через Проводник через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
     hello_text = ft.Text(value = "Модификатор имени файла готов к работе\nРежим ожидания ввода имени файла",  size=20, color="blue")
-    # На начальном экране делаем видимыми только кнопку Выбор Папки
-## остальные кнопки убираем
-    # btn_confirm.visible = False
-    # убираем Ползунок выбора режима Рекурсии
-    # btn_switch.visible = False
-
+ 
 ## 2. Задаем  функции кнопок:
-### 
+
 ### 2.1. Задаем функцию Выбора папки 
     def on_dialog_result(e):  # Выбор из Windows
         if e.path:
@@ -105,16 +100,13 @@ def modif_gui(page: ft.Page):
             
         btn_confirm.visible = False
         page.update()
-
-    # btn_confirm.on_click = on_button_confirm
-    
-
+  
 ### 2.3. Создаем функцию кнопки Запуск Модификатора
     def on_button_modif(e): # Запуск Анализатора
         try:
             # забираем из page.session путь записанный в функции on_button_click_1
             res = page.session.get('path')
-            print(res, 122)
+            
             # запускаем функцию process_logic, которую мы импортировали из cli_star_ficha
             process_logic(*res)
             # Убираем кнопку Запуск Модификатора
@@ -191,16 +183,14 @@ def modif_gui(page: ft.Page):
         padding=ft.padding.only(right=20, bottom=1) #  "подъемник" на 20 пикселей от края
     )
              )
-    # page.add(btn_switch, btn_confirm, btn_modif, btn_reset)
 
-ft.app(target=modif_gui)
 #### 5. Вызов функции 
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
     
-#     args = parser.parse_args()
+    args = parser.parse_args()
     
-#     try:
-#      ft.app(target=modif_gui)
-#     except Exception as e:
-#         logging.error(e)
+    try:
+     ft.app(target=modif_gui)
+    except Exception as e:
+        logging.error(e)

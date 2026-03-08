@@ -2,9 +2,8 @@ import argparse
 import flet as ft 
 import os
 import logging
-from gui.logic.logic_save_to_csv import save_to_csv
 from src.filesystem.cli_modif_files import process_logic
-from gui.logic.chek_path import chek
+
 
 
 def modif_gui(page: ft.Page):  
@@ -172,17 +171,39 @@ def modif_gui(page: ft.Page):
 
 
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
-    page.add(text_path, ft.Container(content=ft.Column([btn_switch, btn_confirm, btn_modif, btn_reset], spacing=20, 
-                                     alignment=ft.MainAxisAlignment.START),
-             padding=ft.padding.only(left=20, top=40)
-                                     ),
-              ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER),
-              ft.Row([btn_select], spacing=20),
-                   ft.Container(
-        content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
-        padding=ft.padding.only(right=20, bottom=1) #  "подъемник" на 20 пикселей от края
+    # page.add(text_path, ft.Container(content=ft.Column([btn_switch, btn_confirm, btn_modif, btn_reset], spacing=20, 
+    #                                  alignment=ft.MainAxisAlignment.START),
+    #          padding=ft.padding.only(left=20, top=40)
+    #                                  ),
+    #           ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER),
+    #           ft.Row([btn_select], spacing=20),
+    #                ft.Container(
+    #     content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+    #     padding=ft.padding.only(right=20, bottom=1) #  "подъемник" на 20 пикселей от края
+    # )
+    #          )
+# Заменяем ваш текущий page.add на этот вариант:
+    page.add(
+        ft.Column(
+            [
+                text_path,
+                ft.Row([btn_select], spacing=20),
+                ft.Container(
+                    content=ft.Column([btn_switch, btn_confirm, btn_modif, btn_reset], spacing=10),
+                    padding=ft.padding.only(left=20, top=20)
+                ),
+                ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER),
+                # ft.Spacer(), # <--- МАГИЯ ЗДЕСЬ: этот элемент "расталкивает" контент
+                ft.Container(expand=True),
+                ft.Container(
+                    content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+                    padding=ft.padding.only(right=20, bottom=20)
+                )
+            ],
+            expand=True # Заставляет Column занять всю высоту окна
+        )
     )
-             )
+
 
 #### 5. Вызов функции 
 if __name__ == "__main__":

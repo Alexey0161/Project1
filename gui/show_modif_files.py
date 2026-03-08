@@ -15,7 +15,7 @@ def modif_gui(page: ft.Page):
     
     text_path = ft.TextField(label='ВЫБЕРИТЕ папку через Проводник через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
-    hello_text = ft.Text(value = "Модификатор имени файла готов к работе\nРежим ожидания ввода имени файла",  size=20, color="blue")
+    hello_text = ft.Text(value = "Модификатор имени файла готов к работе\nРежим ожидания ввода пути к папке",  size=20, color="blue")
  
 ## 2. Задаем  функции кнопок:
 

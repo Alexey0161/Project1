@@ -1,5 +1,6 @@
 # новый вариант кода
 [tool.pytest.ini_options]
+testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.ruff]
@@ -15,3 +16,5 @@ select = ["E", "F", "W", "I"]
 "tests/*" = ["E501"]
 "src/ficha_copy.py" = ["E501"]
 "src/parser2.py" = ["E501"]
+
+

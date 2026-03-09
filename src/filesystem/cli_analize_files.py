@@ -1,7 +1,7 @@
 import os
 import logging
 import argparse
-from src.config import BYTES_PER_KB
+from src.config import BYTES_PER_KB, setup_logging
 
 #  собираем вспомогательную функцию для поиска ключа по пути к файлу
 def find_folder_file(folder_path,file_path):
@@ -62,7 +62,7 @@ def calculate_everything(path):
         # значения - содержания словаря, то есть имена файлов и их размер
     total_dict['dict_for_dirfiles'] = dict_for_dirfiles
     total_dict['dict_for_dir'] = dict_for_dir
-    
+    print(total_dict, 64)
     return total_dict
 
 def format_size(size_bytes):
@@ -94,12 +94,11 @@ def analize_files(root_path):
         dict_for_dir = total_dict['dict_for_dir']
         dict_for_dirfiles = total_dict['dict_for_dirfiles']
         
-        result = ''
         
         # выводим полный размер директории
      
         print(f'full size: {format_size(full_size):>20}')
-        result += f'full size: {format_size(full_size):>20}\n'
+        
         #  проверяем есть ли в директории вложенные папки 
         if dict_for_dir: 
             for key, value in dict_for_dir.items():
@@ -110,7 +109,6 @@ def analize_files(root_path):
                     ###   функцию format_size переведенных в kb, mb, gb и т.п.
                
                 print(f'-folder: {name_folder:<10}  {format_size(value):>10}')
-                result += f'-folder: {name_folder:<10}  {format_size(value):>10}\n'
         #  проверяем есть ли в КОРНЕ директории вложенные файлы
         if dict_for_dirfiles:
             for key, value in dict_for_dirfiles.items():
@@ -118,9 +116,7 @@ def analize_files(root_path):
                 #   функцию format_size переведенных в kb, mb, gb и т.п.
               
                 print(f'-file: {key:<10} {format_size(value):>10}')
-                result += f'-file: {key:<10} {format_size(value):>10}\n'
-    
-    return result
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
@@ -129,7 +125,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     try:
-       analize_files(args.path)
+        setup_logging()
+        analize_files(args.path)
     except Exception as e:
         logging.error(e)
                

@@ -1,10 +1,4 @@
-r""" --- чтобы в комментарии можно было писать любые пути через слэш "\", не экранируя
-Документация:
-запуск файла из командной строки из папки src:
- python cli_find_file.py find <путь до целевой папки> <верхний предел размера файла в Кбайтах>
- Пример:
-    python cli_find_file.py find /storage/emulated/0/python/tests 100
-"""
+from src.config import BYTES_PER_KB, setup_logging
 
 import os
 import sys
@@ -14,7 +8,7 @@ def find_file(target_dir, size):
     target_dir = os.path.normpath(target_dir)
     limit_size = None
     try:
-        limit_size = float(size) * 1024 #преобразуем кбайты в байты
+        limit_size = float(size) * BYTES_PER_KB #преобразуем кбайты в байты
     except (ValueError, TypeError):
         print('Ошибка: Вводимое значение должно содержать только цифры')
         
@@ -33,7 +27,7 @@ def find_file(target_dir, size):
                     if  limit_size is not None:
                         if full_size < limit_size:
                             t.append(i)
-                            logging.info(f'Найден файл: {i} {full_size / 1024: .2f}')
+                            logging.info(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
                     else:
                         return
                          
@@ -45,7 +39,7 @@ def find_file(target_dir, size):
 
 
 if __name__ == '__main__':
-
+    setup_logging()
     if len(sys.argv)  >= 2:
         find_file(sys.argv[1], sys.argv[2])
     else:

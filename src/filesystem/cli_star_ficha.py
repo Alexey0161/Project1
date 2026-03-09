@@ -1,6 +1,8 @@
 import os
 import logging
 import argparse
+from src.config import BYTES_PER_KB, setup_logging
+
 
 #  собираем вспомогательную функцию для поиска ключа по пути к файлу
 def find_folder_file(folder_path,file_path):
@@ -70,8 +72,8 @@ def format_size(size_bytes):
     units = ['bytes', 'KB', 'MB', 'GB', 'TB']
     size = float(size_bytes)
     unit_index = 0
-    while size >= 1024 and unit_index < len(units) - 1:
-        size /= 1024
+    while size >= BYTES_PER_KB and unit_index < len(units) - 1:
+        size /= BYTES_PER_KB
         unit_index += 1
     # Форматируем результат с 2 знаками после запятой
     if units[unit_index] == 'bytes':
@@ -99,8 +101,8 @@ def star_ficha(root_path):
         
         # выводим полный размер директории
         result_str = format_size(full_size)
-        # print(result_str, 101)
-        # print(f'full size: {result_str:>20}')
+       
+        logging.info(f'full size: {result_str:>20}')
         result += f'full size: {result_str:>20}\n'
         
         #  проверяем есть ли в директории вложенные папки 
@@ -119,7 +121,7 @@ def star_ficha(root_path):
                
                  # вычисляем процент занимаего места от полного размера папки
                 part_size = round((value/full_size)*100, 2)
-                # print(f'-folder: {name_folder:<10}  {result_str:>10} amounts to {part_size}% ')
+                logging.info(f'-folder: {name_folder:<10}  {result_str:>10} amounts to {part_size}% ')
                 result += f'-folder: {name_folder:<10}  {result_str:>10} amounts to {part_size}%\n'
     
         
@@ -132,7 +134,7 @@ def star_ficha(root_path):
                
                  # вычисляем процент занимаего места от полного размера папки
                 part_size = round((value/full_size)*100, 2)
-                # print(f'-file: {key:<10} {result_str:>10} amounts to {part_size}% ')
+                logging.info(f'-file: {key:<10} {result_str:>10} amounts to {part_size}% ')
                 result += f'-file: {key:<10} {result_str:>10} amounts to {part_size}%\n'
     return result
 
@@ -146,7 +148,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     try:
-       star_ficha(args.path)
+        setup_logging()
+        star_ficha(args.path)
     except Exception as e:
         logging.error(e)
                

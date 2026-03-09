@@ -26,7 +26,7 @@ def find_file(target_dir, size):
                     if  limit_size is not None:
                         if full_size < limit_size:
                             found_files.append(i)
-                            logging.info(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
+                            print(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
                             
                     else:
                         return

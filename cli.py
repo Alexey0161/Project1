@@ -18,6 +18,7 @@ from src.filesystem.cli_star_ficha import star_ficha
 # Импортируем модуль логирования
 import logging
 
+
 # Настройка "голоса"  программы в логировании
 logging.basicConfig(
     level=logging.INFO,
@@ -66,7 +67,8 @@ def main():
     star_p = subparsers.add_parser('star', help='Вывести звездную информаию о размерах директории и вложенных папок и файлов') 
     star_p. add_argument('root_path', type=str, help='Полный путь к директории для анализа')
      
-     
+    # args = parser.parse_args()
+    
     try:
         args = parser.parse_args()
         
@@ -122,9 +124,8 @@ def start_menu():
     from main import main as start_interactive
     print("--- Добро пожаловать в Интерактивный Режим! ---")
     start_interactive()
-    # Тут  старый код с input(), choice и while True
-    # Это ваша "песочница", ТЗ её не запрещает, если она вызывается отдельно!
 
 
 if __name__ == "__main__":
+    
     main()

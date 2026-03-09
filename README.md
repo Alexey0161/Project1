@@ -4,7 +4,7 @@
 Общие сведиения о проекте:
 
 1. Проект состоит из двух частей:
-   1.1 Базовая - содержит код 7 файлов фичей, находится в папке src\filesystem и 6 файлов  тестов на фичи находится в папке tests\
+   1.1 Базовая - содержит код 7 файлов фичей, находится в папке src/filesystem и 6 файлов  тестов на фичи находится в папке tests\
    1.2. Графическая -  содержит код 7 файлов с кодом графики для отображения фичей в окне библиотеки flet.
 2. Технический стек описан в файле: requirements.txt
    2.1. Установка стека осуществляется в пакетном режиме через команду:
@@ -52,7 +52,7 @@ python cli.py copy test.txt
 Команда позволяет папку или файл по указанному пути.
 
 **Запуск через CLI:**
-```powershell
+powershell
 python cli.py delete <путь к папке или файлу>
 к примеру:
 python cli.py delete C:\Users\ivano\Desktop\Project1\Total1 
@@ -70,13 +70,13 @@ python cli.py delete C:\Users\ivano\Desktop\Project1\Total1
 Команда позволяет подсчитать количество файлов в директории, включая вложенные папки.
 
 **Запуск через CLI:**
-```powershell
+ powershell
 python cli.py count <полный путь к директории> 
 к примеру: 
 python cli.py count C:\Users\ivano\Desktop\Project1\src
 
 **Запуск через интерактивное меню:**
-```powershell
+ powershell
  python cli.py menu
 
 Выберите номер пункта меню "3. Запустить счетчик файлов" и введите его.
@@ -89,14 +89,14 @@ python cli.py count C:\Users\ivano\Desktop\Project1\src
 Команда позволяет найти файлы в директории, включая вложенные папки, размер которых меньше заданного значения в килобайтах
 
 **Запуск через CLI:**
-```powershell
+ powershell
 python cli.py find <полный путь к директории>
 < размер файла в килобайтах> 
 к примеру:
 python cli.py find C:\Users\ivano\Desktop\Project1\src 100
 
 **Запуск через интерактивное меню:**
-```powershell
+ powershell
 
  python cli.py menu
 
@@ -114,7 +114,7 @@ C:\Users\ivano\Desktop\Project1\Total
 Команда позволяет в имена  файлов в директории, опционально по параметру --recursive -  включая вложенные папки, вставлять дату создания файла.
 
 **Запуск через CLI:**
-```powershell
+ powershell
 python cli.py modif <полный путь к директории>
 < размер файла в килобайтах> 
 к примеру:
@@ -125,7 +125,7 @@ python cli.py modif C:\Users\ivano\Desktop\Project1\Total1 --recursive
 
 
 **Запуск через интерактивное меню:**
-```powershell
+ powershell
 
  python cli.py menu
 
@@ -141,14 +141,14 @@ C:\Users\ivano\Desktop\Project1\Total1
 '### 6. Анализатор директории '
 Команда выводит полный размер директории, имена и размер корневых папок, имена и размер корневых файлов.
 **Запуск через CLI:**
-```powershell
+ powershell
 python cli.py analize <полный путь к директории>
 
 к примеру:
 python cli.py analize C:\Users\ivano\Desktop\Project1\src 
 
 **Запуск через интерактивное меню:**
-```powershell
+ powershell
 
 python cli.py menu
 
@@ -160,14 +160,14 @@ C:\Users\ivano\Desktop\Project1\Total
 '### 7. ЗВЕЗДНЫЙ Анализатор директории '
 Команда выводит полный размер директории, имена и размер корневых папок, имена и размер корневых файлов и ПРОЦЕНТ занимаемого объема от полного размера директории
 **Запуск через CLI:**
-```powershell
-python cli.py start <полный путь к директории>
+ powershell
+python cli.py star <полный путь к директории>
 
 к примеру:
 python cli.py star C:\Users\ivano\Desktop\Project1\src 
 
 **Запуск через интерактивное меню:**
-```powershell
+ powershell
 
 python cli.py menu
 

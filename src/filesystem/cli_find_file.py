@@ -1,10 +1,4 @@
-r""" --- чтобы в комментарии можно было писать любые пути через слэш "\", не экранируя
-Документация:
-запуск файла из командной строки из папки src:
- python cli_find_file.py find <путь до целевой папки> <верхний предел размера файла в Кбайтах>
- Пример:
-    python cli_find_file.py find /storage/emulated/0/python/tests 100
-"""
+
 
 import os
 import sys
@@ -12,13 +6,14 @@ import logging
 
 def find_file(target_dir, size):
     target_dir = os.path.normpath(target_dir)
+    print(target_dir, size, 9)
     limit_size = None
     try:
         limit_size = float(size) * 1024 #преобразуем кбайты в байты
     except (ValueError, TypeError):
         print('Ошибка: Вводимое значение должно содержать только цифры')
         
-    t = [] # создаем список для файлов, которые прошли фильтр
+    found_files = [] 
     if  os.path.exists(target_dir): # через if защищаем код, от падения, если пути не сущенствует
                 
         for r, d, f in os.walk(target_dir):
@@ -29,20 +24,22 @@ def find_file(target_dir, size):
                 if os.path.isfile(path_i):
 
                     full_size = os.path.getsize(path_i)
+                    # print(full_size, 27)
 
                     if  limit_size is not None:
                         if full_size < limit_size:
-                            t.append(i)
+                            found_files.append(i)
                             logging.info(f'Найден файл: {i} {full_size / 1024: .2f}')
+                            # print(f'Найден файл: {i} {full_size / 1024: .2f}')
                     else:
                         return
-                         
+        # print(found_files, 35)                         
     else: 
         raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
         
-    return t
+    return found_files
 
-
+# find_file('C:\\Users\\ivano\\Desktop\\Project1\\Total1', 1)
 
 if __name__ == '__main__':
 

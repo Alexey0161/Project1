@@ -3,13 +3,15 @@
 import os
 import sys
 import logging
+# import config
+from config import BYTES_PER_KB 
 
 def find_file(target_dir, size):
     target_dir = os.path.normpath(target_dir)
-    print(target_dir, size, 9)
+    # print(target_dir, size, 9)
     limit_size = None
     try:
-        limit_size = float(size) * 1024 #преобразуем кбайты в байты
+        limit_size = float(size) * BYTES_PER_KB  #преобразуем кбайты в байты
     except (ValueError, TypeError):
         print('Ошибка: Вводимое значение должно содержать только цифры')
         
@@ -29,8 +31,8 @@ def find_file(target_dir, size):
                     if  limit_size is not None:
                         if full_size < limit_size:
                             found_files.append(i)
-                            logging.info(f'Найден файл: {i} {full_size / 1024: .2f}')
-                            # print(f'Найден файл: {i} {full_size / 1024: .2f}')
+                            logging.info(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
+                            print(f'Найден файл: {i} {full_size / 1024: .2f}')
                     else:
                         return
         # print(found_files, 35)                         
@@ -39,12 +41,12 @@ def find_file(target_dir, size):
         
     return found_files
 
-# find_file('C:\\Users\\ivano\\Desktop\\Project1\\Total1', 1)
+find_file('C:\\Users\\ivano\\Desktop\\Project1\\Total1', 1)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    if len(sys.argv)  >= 2:
-        find_file(sys.argv[1], sys.argv[2])
-    else:
-        logging.warning("Используйте: python cli.py  <имя_папки> <размер>")
+#     if len(sys.argv)  >= 2:
+#         find_file(sys.argv[1], sys.argv[2])
+#     else:
+#         logging.warning("Используйте: python cli.py  <имя_папки> <размер>")
 

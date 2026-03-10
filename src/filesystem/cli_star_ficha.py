@@ -1,12 +1,7 @@
 import os
 import logging
 import argparse
-<<<<<<< HEAD
-from src.config import BYTES_PER_KB, setup_logging
-
-=======
 from src.config import BYTES_PER_KB, setup_logging 
->>>>>>> dev
 
 #  собираем вспомогательную функцию для поиска ключа по пути к файлу
 def find_folder_file(folder_path,file_path):
@@ -81,20 +76,10 @@ def star_ficha(root_path):
         dict_for_dir = total_dict['dict_for_dir']
         dict_for_dirfiles = total_dict['dict_for_dirfiles']
         
-<<<<<<< HEAD
-        result = ''
-        
-        # выводим полный размер директории
-        result_str = format_size(full_size)
-       
-        logging.info(f'full size: {result_str:>20}')
-        result += f'full size: {result_str:>20}\n'
-=======
         # выводим полный размер директории
         result_str = format_size(full_size)
         
         print(f'full size: {result_str:>20}')
->>>>>>> dev
         
         #  проверяем есть ли в директории вложенные папки 
         if dict_for_dir: 
@@ -132,14 +117,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     try:
-<<<<<<< HEAD
-        setup_logging()
-        star_ficha(args.path)
-=======
          
        setup_logging()
        star_ficha(args.path)
->>>>>>> dev
     except Exception as e:
         logging.error(e)
                

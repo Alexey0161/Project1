@@ -1,11 +1,7 @@
 import os
 import logging
 import argparse
-<<<<<<< HEAD
-from src.config import BYTES_PER_KB, setup_logging
-=======
 from src.config import BYTES_PER_KB, setup_logging 
->>>>>>> dev
 
 #  собираем вспомогательную функцию для поиска ключа по пути к файлу
 def find_folder_file(folder_path,file_path):
@@ -103,13 +99,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     try:
-<<<<<<< HEAD
-        setup_logging()
-        analize_files(args.path)
-=======
        setup_logging() 
        analize_files(args.path)
->>>>>>> dev
     except Exception as e:
         logging.error(e)
                

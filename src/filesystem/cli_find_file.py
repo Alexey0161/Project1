@@ -1,18 +1,26 @@
+<<<<<<< HEAD
 from src.config import BYTES_PER_KB, setup_logging
 
+=======
+>>>>>>> dev
 import os
 import sys
 import logging
+from src.config import BYTES_PER_KB, setup_logging 
 
 def find_file(target_dir, size):
     target_dir = os.path.normpath(target_dir)
     limit_size = None
     try:
+<<<<<<< HEAD
         limit_size = float(size) * BYTES_PER_KB #преобразуем кбайты в байты
+=======
+        limit_size = float(size) * BYTES_PER_KB  #преобразуем кбайты в байты
+>>>>>>> dev
     except (ValueError, TypeError):
         print('Ошибка: Вводимое значение должно содержать только цифры')
         
-    t = [] # создаем список для файлов, которые прошли фильтр
+    found_files = [] 
     if  os.path.exists(target_dir): # через if защищаем код, от падения, если пути не сущенствует
                 
         for r, d, f in os.walk(target_dir):
@@ -26,17 +34,20 @@ def find_file(target_dir, size):
 
                     if  limit_size is not None:
                         if full_size < limit_size:
+<<<<<<< HEAD
                             t.append(i)
                             logging.info(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
+=======
+                            found_files.append(i)
+                            print(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
+                            
+>>>>>>> dev
                     else:
                         return
-                         
     else: 
         raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
         
-    return t
-
-
+    return found_files
 
 if __name__ == '__main__':
     setup_logging()

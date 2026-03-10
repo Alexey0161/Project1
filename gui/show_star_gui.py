@@ -5,7 +5,7 @@ import logging
 from gui.logic.logic_save_to_csv import save_to_csv
 from src.filesystem.cli_star_ficha import star_ficha
 from gui.logic.chek_path import chek
-
+from src.config import BYTES_PER_KB, setup_logging
 
 def star_gui(page: ft.Page):  
     

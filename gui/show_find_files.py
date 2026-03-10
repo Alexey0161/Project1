@@ -51,7 +51,7 @@ def find_gui(page: ft.Page):
     get_directory_dialog = ft.FilePicker(on_result=on_dialog_result)
     
     page.overlay.append(get_directory_dialog) # Обязательно добавляем на холст!
-### 2.1. Задаем функцию Кнопки выбора предельного размера файла:
+### 2.1. Задаем функцию Кнопки Подтверждения выбора предельного размера файла:
     
     def on_confirm(e):
         # Получаем значение из поля

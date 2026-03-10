@@ -79,17 +79,21 @@ def analize_files(root_path):
         # выводим полный размер директории
      
         print(f'full size: {format_size(full_size):>20}')
-        
+        result = f'full size: {format_size(full_size):>20}\n'
         #  проверяем есть ли в директории вложенные папки 
         if dict_for_dir: 
             for key, value in dict_for_dir.items():
                 name_folder = os.path.basename(key)
                
                 print(f'-folder: {name_folder:<10}  {format_size(value):>10}')
+                result += f'-folder: {name_folder:<10}  {format_size(value):>10}\n'
         #  проверяем есть ли в КОРНЕ директории вложенные файлы
         if dict_for_dirfiles:
             for key, value in dict_for_dirfiles.items():
                 print(f'-file: {key:<10} {format_size(value):>10}')
+                result += f'-file: {key:<10} {format_size(value):>10}\n'
+        
+        return result
 
 
 if __name__ == '__main__':

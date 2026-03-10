@@ -14,7 +14,7 @@ def find_file(target_dir, size):
         
     found_files = [] 
     if  os.path.exists(target_dir): # через if защищаем код, от падения, если пути не сущенствует
-                
+        result = ''        
         for r, d, f in os.walk(target_dir):
             for i in f: # f - walk выдает файлы в виде списка
 
@@ -25,16 +25,17 @@ def find_file(target_dir, size):
                     full_size = os.path.getsize(path_i)
 
                     if  limit_size is not None:
+                        
                         if full_size < limit_size:
                             found_files.append(i)
                             print(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
-                            
+                            result += f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}\n'
                     else:
                         return
     else: 
         raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
-        
-    return found_files
+    print(result, 37)    
+    return result
 
 if __name__ == '__main__':
     setup_logging()

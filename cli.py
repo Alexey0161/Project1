@@ -67,11 +67,7 @@ def main():
     star_p = subparsers.add_parser('star', help='Вывести звездную информаию о размерах директории и вложенных папок и файлов') 
     star_p. add_argument('root_path', type=str, help='Полный путь к директории для анализа')
      
-<<<<<<< HEAD
-    args = parser.parse_args()
-=======
     # args = parser.parse_args()
->>>>>>> dev
     
     try:
         args = parser.parse_args()

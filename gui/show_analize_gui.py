@@ -32,6 +32,7 @@ def analize_gui(page: ft.Page):
             hello_text.color = "red"
             hello_text.size = 30
             path = os.path.normpath(str(text_path.value))
+            print(path, 35)
             page.session.set('result', path)
             
         else:
@@ -86,6 +87,7 @@ def analize_gui(page: ft.Page):
         try:
             # забираем из page.session путь записанный в функции on_button_click_1
             res = page.session.get('result')
+            print(res, 89)
             
             # запускаем функцию star_ficha, которую мы импортировали из cli_star_ficha
             fresh_result = analize_files(res)
@@ -93,7 +95,7 @@ def analize_gui(page: ft.Page):
             # собираем  вывод res (общая длинная строка) в список 
             ## из отдельных строк по разделителю '\n'
             res_list = fresh_result.split('\n')
-        
+                    
             page.session.set('res_list', res_list)
         
             # делаем видимой кнопку вывода в файл

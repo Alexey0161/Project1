@@ -80,6 +80,7 @@ def star_ficha(root_path):
         result_str = format_size(full_size)
         
         print(f'full size: {result_str:>20}')
+        result = f'full size: {result_str:>20}\n'
         
         #  проверяем есть ли в директории вложенные папки 
         if dict_for_dir: 
@@ -92,24 +93,23 @@ def star_ficha(root_path):
                
                  # вычисляем процент занимаего места от полного размера папки
                 part_size = round((value/full_size)*100, 2)
-                logging.info(f'-folder: {name_folder:<10}  {result_str:>10} amounts to {part_size}% ')
+                print(f'-folder: {name_folder:<10}  {result_str:>10} amounts to {part_size}% ')
                 result += f'-folder: {name_folder:<10}  {result_str:>10} amounts to {part_size}%\n'
-    
+                
         
         # #  проверяем есть ли в КОРНЕ директории вложенные файлы
         if dict_for_dirfiles:
             for key, value in dict_for_dirfiles.items():
                 result_str = format_size(value)
-               
+                             
                  # вычисляем процент занимаего места от полного размера папки
                 part_size = round((value/full_size)*100, 2)
-                logging.info(f'-file: {key:<10} {result_str:>10} amounts to {part_size}% ')
+                
+                print(f'-file: {key:<10} {result_str:>10} amounts to {part_size}% ')
                 result += f'-file: {key:<10} {result_str:>10} amounts to {part_size}%\n'
     return result
 
-# path = "C:/Users\ivano\Desktop\Project1\Total\Total1"
-# path = os.path.normpath(path)
-# print(star_ficha(path))
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
     parser.add_argument("path", help="Путь к папке")

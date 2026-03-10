@@ -4,6 +4,7 @@ import logging
 from gui.show_analize_gui import analize_gui
 from gui.show_star_gui import star_gui
 from gui.show_modif_files import modif_gui
+from gui.show_find_files import find_gui
 
 def main_show(page: ft.Page):
         
@@ -31,7 +32,15 @@ def main_show(page: ft.Page):
         page.clean() # очищаем окно от элементов Главного меню
         modif_gui(page) # Вызываем фичу графики
         page.update()
-    # page.update()
+
+
+### 2.4. Собираем фичу кнопки запуска Поисковика файлов        
+    def open_find_gui(e):
+        page.clean() # очищаем окно от элементов Главного меню
+        find_gui(page) # Вызываем фичу графики
+        page.update()
+                
+    page.update()
     
 
 ## 3. Собираем кнопки запуска фичей
@@ -44,6 +53,9 @@ def main_show(page: ft.Page):
 ### 3.3. Собираем кнопку запуска графики фичи  Модификатор файлов
     btn_modif = ft.ElevatedButton("Запуск Модификатора имени файлов",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_modif_gui,
                             tooltip="Кнопка для запуска Модификатора имени файлов в  выбранной папке")  
+### 3.4. Собираем кнопку запуска графики фичи  Поисковик файлов
+    btn_find = ft.ElevatedButton("Запуск Поисковик  файлов меньше предельного размера",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_find_gui,
+                            tooltip="Кнопка для запуска поисковика  файлов меньше предельного размера в  выбранной папке")      
 ## 4. Собираем визуализацию элементов Единого окна
     page.add(#ft.Row([btn1], spacing=20),
             ft.Row(
@@ -51,7 +63,7 @@ def main_show(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER
                    ),
             ft.Container(
-        content=ft.Column([btn_star, btn_analize, btn_modif], spacing=20, alignment=ft.MainAxisAlignment.START),
+        content=ft.Column([btn_star, btn_analize, btn_modif, btn_find], spacing=20, alignment=ft.MainAxisAlignment.START),
         padding=ft.padding.only(left=20, top=40)
                         )
             )

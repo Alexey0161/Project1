@@ -21,7 +21,7 @@ def analize_gui(page: ft.Page):
 
 
 ## 2. Задаем  функции кнопок:
-### 2.1.  Создаем функцию Кнопки btn_select выбора папки из Windows   
+### 2.1.  Собираем функциюСоздаем функцию Кнопки btn_select выбора папки из Windows   
     def on_dialog_result(e):  # Выбор из Windows
         if e.path:
             # Если путь выбран - обновляем поле и радуем пользователя
@@ -46,7 +46,7 @@ def analize_gui(page: ft.Page):
     page.overlay.append(get_directory_dialog) # Обязательно добавляем на холст!
 
 
-### 2.2.  Функция Кнопки, которая ВВОД:
+### 2.2.Собираем функцию  Кнопки, которая ВВОД:
     def on_button_click_1(e): # Ввод
 
         try:
@@ -75,7 +75,7 @@ def analize_gui(page: ft.Page):
     
         page.update()
 
-### 2.3.  Кнопки Запуска Анализа:
+### 2.3. Собираем функцию Кнопки Запуска Анализа:
     ## формируем контейнер для сбора данных в полосе прокрутки
     result_container = ft.Column(
     width=800,         # Ширина области
@@ -175,14 +175,14 @@ def analize_gui(page: ft.Page):
 ### 3.4. Задание Кнопки Сброс  (функция reset_app)      
     btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, on_click=reset_app,
                                   tooltip="Кнопка для сброса и перевода окна в готовность к работе")
-### 3.5. Задание Кнопки выбора папки  Windows (функция on_dialog_result)
+### 3.5. Задание Кнопку выбора папки  Windows (функция on_dialog_result)
     btn_select = ft.ElevatedButton(
         "Выбрать папку",
         icon=ft.icons.FOLDER_OPEN,
         on_click=lambda _: get_directory_dialog.get_directory_path(),
         tooltip="Нажмите, чтобы выбрать папку через проводник Windows" #  тултип
     )  
-### 3.6.  Собираем Кнопку Домой     
+### 3.6.  Задание Кнопки Домой     
     btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
         tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
     btn_home.visible = True

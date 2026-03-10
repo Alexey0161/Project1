@@ -136,7 +136,13 @@ def find_gui(page: ft.Page):
         # удаляем содержимое окна прокрутки
         result_container.controls.clear()
         
-        page.update()    
+        page.update()   
+    ###  2.5. Собираем функцию Кнопки Домой 
+    def on_home(e):
+        from run_gui import main_show
+        page.clean() # очищаем экран от элементов графики Звездочки
+        main_show(page) # вызываем Главное Меню/Единое окно
+        page.update()       
     page.update()
 
 #  ## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
@@ -156,21 +162,31 @@ def find_gui(page: ft.Page):
 ### 3.4. Задание Кнопки Сброс  (функция reset_app)      
     btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, visible=True, on_click=reset_app,
                                   tooltip="Кнопка для сброса и перевода окна в готовность к работе")
-# btn_find.visible = True
+### 3.5.  Задание Кнопки Домой     
+    btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
+        tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
+    btn_home.visible = True
+
     
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
  
-    page.add(text_path, ft.Row([btn_select,  number_input, btn_confirm, btn_find], spacing=20), 
+    page.add(
+        ft.Column(
+        [
+        text_path, ft.Row([btn_select,  number_input, btn_confirm, btn_find], spacing=20), 
              ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER), 
              ft.Row([btn_reset], alignment=ft.MainAxisAlignment.CENTER),
-                ft.Row([result_container]))#, alignment=ft.MainAxisAlignment.CENTER))#,
-                       #expand=True) # Заставляет Column занять всю высоту окна),
-                # ft.Container(
-                    # content=ft.Column([btn_switch, btn_confirm, btn_modif, btn_reset], spacing=10),
-                    # padding=ft.padding.only(left=20, top=20)
-                #),
-                
-           
+                ft.Row([result_container]),
+               ft.Container(expand=True),
+                ft.Container(
+                    content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+                    padding=ft.padding.only(right=20, bottom=50),
+                )
+        ],                
+            expand=True # Заставляет Column занять всю высоту окна
+                            )
+
+            )
         
  
  #### 5. Вызов функции 

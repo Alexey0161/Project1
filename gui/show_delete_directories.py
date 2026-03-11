@@ -14,7 +14,7 @@ def delete_gui(page: ft.Page):
     text_path = ft.TextField(label='ВЫБЕРИТЕ папку через Проводник через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
     
-    hello_text = ft.Text(value = "Удалитель папок и  файлов готов к работе \nРежим ожидания ввода пути к папке",  size=20, color="blue")
+    hello_text = ft.Text(value = "Удалитель папок и  файлов готов к работе \nРежим ожидания ввода пути к папке",  size=30, color="green")
 
  ## 2. Собираем  функции кнопок:
 ### 2.1. Собираем функцию Выбора папки 
@@ -66,7 +66,12 @@ def delete_gui(page: ft.Page):
                   
             # записываем результат Счетчика в поле для вывода в Окне
             
-            hello_text.value = "РЕЗУЛЬТАТ\n           Удаление объектов произведено"
+            ## = "                 РЕЗУЛЬТАТ\n     Удаление объектов произведено\n
+            # Нажмите кнопку Срос для перевода Окна в режим готовности"
+            hello_text.value = """                 
+                                    РЕЗУЛЬТАТ
+                            Удаление объектов произведено
+            Нажмите кнопку Срос для перевода Окна в режим готовности"""
             hello_text.color = 'red'
             hello_text.size = 30
             # btn_find.visible = False
@@ -78,16 +83,37 @@ def delete_gui(page: ft.Page):
         # После удаления закрываем диалог
         alert.open = False
         page.update()
-        # Создаём диалог один раз при инициализации
+    ### 2.4. Создаём диалог один раз при инициализации
     alert = ft.AlertDialog(
         title=ft.Text("Подтверждение удаления"),
         content=ft.Text("Вы уверены, что хотите удалить папку?"),
         actions=[
             ft.TextButton("Отмена", on_click=lambda e: close_dialog(e)),
             ft.TextButton("Удалить", on_click=confirm_delete),
-        ],
-    )
-    
+                ],
+                        )
+### 2.4. Собираем функцию кнопки Сброс
+    def reset_app(e): # Сброс
+        
+        hello_text.value = "Удалитель папок и  файлов готов к работе \nРежим ожидания ввода пути к папке"
+ 
+        hello_text.color = "green"
+        hello_text.size = 30
+        page.session.set(None, None)
+        text_path.color = "blue"
+        text_path.value = None
+        # возвращаем видимость кнопки и поля для ввода пути к директории
+        text_path.visible = True
+
+        # открываем кнопку Выбор Папки:
+        btn_select.visible = True
+        # прячем строку "text_path.helper_text"
+        text_path.helper_text = ''
+        # прячем кнопку Удалитель папок
+        btn_delete.visible = False
+        
+        
+        page.update()      
 
 #  ## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
     ### 3.1. Задание Кнопки выбора файла из проводника  Windows (функция on_dialog_result)
@@ -100,13 +126,16 @@ def delete_gui(page: ft.Page):
     # ### 3.2. Задание Кнопки  Удаление
     btn_delete = ft.ElevatedButton(text="УДАЛИТЬ ПАПКУ", visible=False, bgcolor="red", color="white", on_click=show_dialog)
     
-    ### 3.3.  Задание Кнопки  Удалить
+     ### 3.3. Задание Кнопки Сброс  (функция reset_app)      
+    btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, visible=True, on_click=reset_app,
+                                  tooltip="Кнопка для сброса и перевода окна в готовность к работе")
+
 
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
  
     page.add(
         
-        text_path, ft.Row([btn_select, btn_delete], spacing=20),
+        text_path, ft.Row([btn_select, btn_delete, btn_reset], spacing=20),
         ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER), 
 
             )

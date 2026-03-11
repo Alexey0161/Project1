@@ -6,6 +6,7 @@ from gui.show_star_gui import star_gui
 from gui.show_modif_gui import modif_gui
 from gui.show_find_gui import find_gui
 from gui.show_count_gui import count_gui 
+from gui.show_delete_gui import delete_gui
 
 def main_show(page: ft.Page):
         
@@ -46,6 +47,12 @@ def main_show(page: ft.Page):
         count_gui(page) # Вызываем фичу графики
         page.update()                
     page.update()
+### 2.6. Собираем фичу кнопки запуска Удалитея  папок        
+    def open_delete_gui(e):
+        page.clean() # очищаем окно от элементов Главного меню
+        delete_gui(page) # Вызываем фичу графики
+        page.update()                
+    page.update()
     
 
 ## 3. Собираем кнопки запуска фичей
@@ -64,6 +71,9 @@ def main_show(page: ft.Page):
 ### 3.5. Собираем кнопку запуска графики фичи  Счетчик файлов
     btn_count = ft.ElevatedButton("Запуск Счетчика  файлов в папке, включая вложенные папки",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_count_gui,
                             tooltip="Кнопка для запуска Счетичика  файлов в папке")      
+### 3.6. Собираем кнопку запуска графики фичи  Счетчик файлов
+    btn_delete = ft.ElevatedButton("Запуск Удалителя   папок",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_delete_gui,
+                            tooltip="Кнопка для запуска Удалителя папок")      
 
 ## 4. Собираем визуализацию элементов Единого окна
     page.add(#ft.Row([btn1], spacing=20),
@@ -72,7 +82,7 @@ def main_show(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER
                    ),
             ft.Container(
-        content=ft.Column([btn_star, btn_analize, btn_modif, btn_find, btn_count], spacing=20, alignment=ft.MainAxisAlignment.START),
+        content=ft.Column([btn_star, btn_analize, btn_modif, btn_find, btn_count, btn_delete], spacing=20, alignment=ft.MainAxisAlignment.START),
         padding=ft.padding.only(left=20, top=40)
                         )
             )

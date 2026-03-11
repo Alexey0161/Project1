@@ -66,8 +66,9 @@ def count_gui(page: ft.Page):
             hello_text.size = 30
             # btn_find.visible = False
         except Exception as err:
-            err = ft.Text(f"❌ Ошибка: {err}", color="red")
-            result_count = err
+            err = f"❌ Ошибка: {err}"
+            result_count.value = err
+            result_count.color = "red"
         page.update()
 ### 2.4. Собираем функцию кнопки Сброс
     def reset_app(e): # Сброс
@@ -88,9 +89,11 @@ def count_gui(page: ft.Page):
         text_path.helper_text = ''
         # обнуляем строку 
         result_count.value = ''
+        result_count.color = 'orange'
         # обнуляем строку 
         result_count.helper_text = ''
         result_count.helper_style = ft.TextStyle(color="blue")
+        
         
         page.update()   
    ###  2.5. Собираем функцию Кнопки Домой 

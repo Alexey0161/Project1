@@ -32,7 +32,8 @@ def analize_gui(page: ft.Page):
             hello_text.color = "red"
             hello_text.size = 30
             path = os.path.normpath(str(text_path.value))
-            print(path, 35)
+            # Открываем кнопку Ввод
+            btn1.visible = True
             page.session.set('result', path)
             
         else:
@@ -163,7 +164,7 @@ def analize_gui(page: ft.Page):
                             tooltip="Кнопка для запуска Анализа выбранной папки")  
     btn.visible = False
 ### 3.2. Задание Кнопки "Ввод" (функция on_button_click_1)
-    btn1 = ft.ElevatedButton('ВВОД', icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_button_click_1,
+    btn1 = ft.ElevatedButton('ВВОД', icon=ft.icons.PLAY_ARROW_SHARP, visible=False, on_click=on_button_click_1,
                              tooltip="Кнопка для подтверждения выбранной папки для анализа")  
 
 ### 3.3. Задание  Кнопки для  вывода результата в файл csv (функция on_button_click_2)

@@ -10,13 +10,13 @@ from src.config import BYTES_PER_KB, setup_logging
 def star_gui(page: ft.Page):  
     
 # 1. Настройка "холста"
-    page.title = "Анализатор" 
+    page.title = "ЗВЕЗДНЫЙ Анализатор" 
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
     page.theme_mode = ft.ThemeMode.DARK
     
     text_path = ft.TextField(label='Введите путь к директории ВРУЧНУЮ или ВЫБЕРИТЕ ПАПКУ через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
-    hello_text = ft.Text(value = "Анализатор директории готов к работе\nРежим ожидания ввода пути к директории",  size=20, color="blue")
+    hello_text = ft.Text(value = "ЗВЕЗДНЫЙ Анализатор директории готов к работе\nРежим ожидания ввода пути к директории",  size=20, color="blue")
 
 
 ## 2. Задаем  функции кнопок:
@@ -30,6 +30,8 @@ def star_gui(page: ft.Page):
             hello_text.value = "     Путь выбран\nНажмите кнопку ВВОД"
             hello_text.color = "red"
             hello_text.size = 30
+            # Открываем Кнопку Ввод
+            btn1.visible = True
             path = os.path.normpath(str(text_path.value))
             page.session.set('result', path)
             
@@ -127,7 +129,7 @@ def star_gui(page: ft.Page):
 ### 2.5. Собираем функцию Кнопки Сброс
     def reset_app(e): # Сброс
         
-        hello_text.value = "Анализатор директории готов к работе\nРежим ожидания ввода пути к директории"
+        hello_text.value = "ЗВЕЗДНЫЙ Анализатор директории готов к работе\nРежим ожидания ввода пути к директории"
         hello_text.color = 'blue'
         page.session.set(None, None)
         text_path.color = "blue"
@@ -158,7 +160,7 @@ def star_gui(page: ft.Page):
                             tooltip="Кнопка для запуска Анализа выбранной папки")  
     btn.visible = False
 ### 3.2. Задание Кнопки "Ввод" (функция on_button_click_1)
-    btn1 = ft.ElevatedButton('ВВОД', icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_button_click_1,
+    btn1 = ft.ElevatedButton('ВВОД', icon=ft.icons.PLAY_ARROW_SHARP, visible=False, on_click=on_button_click_1,
                              tooltip="Кнопка для подтверждения выбранной папки для анализа")  
 
 ### 3.3. Задание  Кнопки для  вывода результата в файл csv (функция on_button_click_2)

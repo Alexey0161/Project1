@@ -7,14 +7,14 @@ from src.filesystem.cli_delete_files import delete_path
 def delete_gui(page: ft.Page):
 
     # 1. Настройка "холста"
-    page.title = "Удалитель папок и файлов" 
+    page.title = "Удалитель папок" 
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
     page.theme_mode = ft.ThemeMode.DARK
     
     text_path = ft.TextField(label='ВЫБЕРИТЕ папку через Проводник через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
     
-    hello_text = ft.Text(value = "Удалитель папок и  файлов готов к работе \nРежим ожидания ввода пути к папке",  size=30, color="green")
+    hello_text = ft.Text(value = "Удалитель папок  готов к работе \nРежим ожидания ввода пути к папке",  size=30, color="green")
 
  ## 2. Собираем  функции кнопок:
 ### 2.1. Собираем функцию Выбора папки 
@@ -41,8 +41,8 @@ def delete_gui(page: ft.Page):
             text_path.helper_text = "⚠️ Выбор отменен"
             text_path.helper_style = ft.TextStyle(color="yellow")
         page.update()
-    
     get_directory_dialog = ft.FilePicker(on_result=on_dialog_result)
+  
     
     page.overlay.append(get_directory_dialog) # Обязательно добавляем на холст!
     ### 2.2.  Функции для управления диалогом
@@ -54,7 +54,7 @@ def delete_gui(page: ft.Page):
     def close_dialog(e):
         alert.open = False
         page.update()
-    ### 2.3. Собираем функцию кнопки Удалить папк
+    ### 2.3. Собираем функцию кнопки Удалить папку
     def confirm_delete(e):
         # Вызываем  бэкенд для удаления
         try:
@@ -66,7 +66,7 @@ def delete_gui(page: ft.Page):
                   
             # записываем результат Счетчика в поле для вывода в Окне
             
-            ## = "                 РЕЗУЛЬТАТ\n     Удаление объектов произведено\n
+            ##  "                 РЕЗУЛЬТАТ\n     Удаление объектов произведено\n
             # Нажмите кнопку Срос для перевода Окна в режим готовности"
             hello_text.value = """                 
                                     РЕЗУЛЬТАТ
@@ -92,10 +92,10 @@ def delete_gui(page: ft.Page):
             ft.TextButton("Удалить", on_click=confirm_delete),
                 ],
                         )
-### 2.4. Собираем функцию кнопки Сброс
+### 2.5. Собираем функцию кнопки Сброс
     def reset_app(e): # Сброс
         
-        hello_text.value = "Удалитель папок и  файлов готов к работе \nРежим ожидания ввода пути к папке"
+        hello_text.value = "Удалитель папок  готов к работе \nРежим ожидания ввода пути к папке"
  
         hello_text.color = "green"
         hello_text.size = 30
@@ -114,7 +114,13 @@ def delete_gui(page: ft.Page):
         
         
         page.update()      
-
+   ###  2.6. Собираем функцию Кнопки Домой 
+    def on_home(e):
+        from run_gui import main_show
+        page.clean() # очищаем экран от элементов графики Звездочки
+        main_show(page) # вызываем Главное Меню/Единое окно
+        page.update()       
+    page.update()
 #  ## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
     ### 3.1. Задание Кнопки выбора файла из проводника  Windows (функция on_dialog_result)
     btn_select = ft.ElevatedButton(
@@ -130,14 +136,27 @@ def delete_gui(page: ft.Page):
     btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, visible=True, on_click=reset_app,
                                   tooltip="Кнопка для сброса и перевода окна в готовность к работе")
 
-
+ ### 3.4.  Задание Кнопки Домой     
+    btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
+        tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
+    btn_home.visible = True
+    
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
  
     page.add(
-        
+        ft.Column(
+        [
         text_path, ft.Row([btn_select, btn_delete, btn_reset], spacing=20),
         ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER), 
-
+            ft.Container(expand=True),
+            ft.Container(
+                    content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+                    padding=ft.padding.only(right=20, bottom=50),
+                            )
+        ],
+        expand=True # Заставляет Column занять всю высоту окна
+        
+                )
             )
 
 #### 5. Вызов функции 

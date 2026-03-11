@@ -40,8 +40,7 @@ def find_gui(page: ft.Page):
             btn_confirm.visible = True
             # # делаем видимым Поле ввода числа:
             number_input.visible = True
-            # # делаем видимой кнопку Сброс
-            # btn_reset.visible = True
+ 
             
         else:
             # Если нажали отмену - не даем программе упасть 
@@ -70,13 +69,12 @@ def find_gui(page: ft.Page):
             hello_text.value = "                     Нажмите кнопку Запуск Поисковика"
             hello_text.color = "green"
             hello_text.size = 30
-            # print(f"Введено число: {value_checked}")
+            print(f"Введено число: {value_checked}")
         except ValueError as e:
-            print(e)
+            
             number_input.helper_text = '⚠️ Ошибка ввода!\nВведите число'
             number_input.helper_style = ft.TextStyle(color="yellow")
-            # Обработка неправильного ввода
-            # page.window_alert("Пожалуйста, введите корректное число.")
+            
         page.update()
 ### 2.3. Собираем функцию запуска Поисковика
 
@@ -181,10 +179,10 @@ def find_gui(page: ft.Page):
                 ft.Container(
                     content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
                     padding=ft.padding.only(right=20, bottom=50),
-                )
+                            )
         ],                
             expand=True # Заставляет Column занять всю высоту окна
-                            )
+                    )
 
             )
         

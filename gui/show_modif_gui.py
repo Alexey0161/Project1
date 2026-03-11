@@ -113,8 +113,11 @@ def modif_gui(page: ft.Page):
             # Выводим информацию об успешном завершении программы
             hello_text.value = "В имена файлов добавлены даты"
         except Exception as err:
-            text_mistake = ft.Text(f"❌ Ошибка: {err}", color="red"
-                                   ,  size = 30)
+            # text_mistake = ft.Text(f"❌ Ошибка: {err}", color="red"
+            #                        ,  size = 30)
+            hello_text.value = f"❌ Ошибка: {err}\nНажмите кнопку Сброс и повторите Ввод пути заново"
+            hello_text.color = "red"
+            hello_text.size = 30
         page.update()
 ### 2.4. Собираем функцию кнопки Сброс
     def reset_app(e): # Сброс
@@ -123,6 +126,8 @@ def modif_gui(page: ft.Page):
         btn_select.visible = True
         text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
         hello_text.value = "Модификатор имени файла готов к работе\nРежим ожидания ввода имени файла"
+        hello_text.color = "blue"
+        hello_text.size = 20
         page.session.set(None, None)
         text_path.color = "blue"
         # убираем помощь
@@ -171,18 +176,7 @@ def modif_gui(page: ft.Page):
 
 
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
-    # page.add(text_path, ft.Container(content=ft.Column([btn_switch, btn_confirm, btn_modif, btn_reset], spacing=20, 
-    #                                  alignment=ft.MainAxisAlignment.START),
-    #          padding=ft.padding.only(left=20, top=40)
-    #                                  ),
-    #           ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER),
-    #           ft.Row([btn_select], spacing=20),
-    #                ft.Container(
-    #     content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
-    #     padding=ft.padding.only(right=20, bottom=1) #  "подъемник" на 20 пикселей от края
-    # )
-    #          )
-# Заменяем ваш текущий page.add на этот вариант:
+ 
     page.add(
         ft.Column(
             [
@@ -193,7 +187,7 @@ def modif_gui(page: ft.Page):
                     padding=ft.padding.only(left=20, top=20)
                 ),
                 ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER),
-                # ft.Spacer(), # <--- МАГИЯ ЗДЕСЬ: этот элемент "расталкивает" контент
+                
                 ft.Container(expand=True),
                 ft.Container(
                     content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),

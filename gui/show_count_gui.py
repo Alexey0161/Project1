@@ -34,6 +34,7 @@ def count_gui(page: ft.Page):
             page.session.set('directory', path)
             # убираем кнопку выбора из windows
             btn_select.visible = False
+            btn_count.visible = True
 
             
             
@@ -53,8 +54,8 @@ def count_gui(page: ft.Page):
         try:
             # забираем из page.session путь записанный в функции on_dialog_result
             res = page.session.get('directory')
-                        # открывае кнопку Запуск Счетчик
-            # bnt_count.visible = True            
+                        # убираем кнопку Запуск Счетчик
+            btn_count.visible = False            
             # запускаем функцию find_file, которую мы импортировали из cli_find_file
             fresh_result = count_files(res)
             result_count.visible = True
@@ -66,6 +67,7 @@ def count_gui(page: ft.Page):
             # btn_find.visible = False
         except Exception as err:
             err = ft.Text(f"❌ Ошибка: {err}", color="red")
+            result_count = err
         page.update()
 ### 2.4. Собираем функцию кнопки Сброс
     def reset_app(e): # Сброс
@@ -91,7 +93,13 @@ def count_gui(page: ft.Page):
         result_count.helper_style = ft.TextStyle(color="blue")
         
         page.update()   
-
+   ###  2.5. Собираем функцию Кнопки Домой 
+    def on_home(e):
+        from run_gui import main_show
+        page.clean() # очищаем экран от элементов графики Звездочки
+        main_show(page) # вызываем Главное Меню/Единое окно
+        page.update()       
+    page.update()
 
 #  ## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
     ### 3.1. Задание Кнопки выбора файла из проводника  Windows (функция on_dialog_result)
@@ -102,22 +110,35 @@ def count_gui(page: ft.Page):
         tooltip="Нажмите, чтобы выбрать папку через проводник Windows" #  тултип
                                     )
     ### 3.2. Задаем кнопку функции запуск Счетчика:
-    btn_count = ft.ElevatedButton("Запуск Счетчика",  icon=ft.icons.PLAY_ARROW_SHARP, visible = True, on_click=on_button_count,
+    btn_count = ft.ElevatedButton("Запуск Счетчика",  icon=ft.icons.PLAY_ARROW_SHARP, visible = False, on_click=on_button_count,
                             tooltip="Кнопка для запуска Поисковика файлов в  выбранной папке")  
 
     ### 3.3. Задание Кнопки Сброс  (функция reset_app)      
     btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, visible=True, on_click=reset_app,
                                   tooltip="Кнопка для сброса и перевода окна в готовность к работе")
 
-    
+ ### 3.4.  Задание Кнопки Домой     
+    btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
+        tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
+    btn_home.visible = True
+   
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
  
     page.add(
-        
+        ft.Column(
+        [
         text_path, ft.Row([btn_select, btn_count, btn_reset], spacing=20), 
              ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER),
-             ft.Row([result_count], alignment=ft.MainAxisAlignment.CENTER)
-             
+             ft.Row([result_count], alignment=ft.MainAxisAlignment.CENTER),
+                ft.Container(expand=True),
+                ft.Container(
+                    content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+                    padding=ft.padding.only(right=20, bottom=50),
+                            )
+        ],
+        expand=True # Заставляет Column занять всю высоту окна
+                    
+                    )       
             )
     
 

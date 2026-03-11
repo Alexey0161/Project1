@@ -3,8 +3,9 @@ import flet as ft
 import logging
 from gui.show_analize_gui import analize_gui
 from gui.show_star_gui import star_gui
-from gui.show_modif_files import modif_gui
-from gui.show_find_files import find_gui
+from gui.show_modif_gui import modif_gui
+from gui.show_find_gui import find_gui
+from gui.show_count_gui import count_gui 
 
 def main_show(page: ft.Page):
         
@@ -12,7 +13,7 @@ def main_show(page: ft.Page):
     page.title = "ГЛАВНОЕ МЕНЮ/ЕДИНОЕ ОКНО" 
     page.vertical_alignment = ft.MainAxisAlignment.CENTER 
     page.theme_mode = ft.ThemeMode.DARK
-    hello_text = ft.Text(value = "Главное меню \nВыберите нужную кнопку",  size=20, color="blue")
+    hello_text = ft.Text(value = "      Главное меню \nВыберите нужную кнопку",  size=40, color="orange")
 
 ## 2. Собираем функции кнопок запуска фичей
 ### 2.1. Собираем фичу кнопки запуска Звездочки    
@@ -39,7 +40,11 @@ def main_show(page: ft.Page):
         page.clean() # очищаем окно от элементов Главного меню
         find_gui(page) # Вызываем фичу графики
         page.update()
-                
+### 2.5. Собираем фичу кнопки запуска Счетчика файлов        
+    def open_count_gui(e):
+        page.clean() # очищаем окно от элементов Главного меню
+        count_gui(page) # Вызываем фичу графики
+        page.update()                
     page.update()
     
 
@@ -56,6 +61,10 @@ def main_show(page: ft.Page):
 ### 3.4. Собираем кнопку запуска графики фичи  Поисковик файлов
     btn_find = ft.ElevatedButton("Запуск Поисковик  файлов меньше предельного размера",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_find_gui,
                             tooltip="Кнопка для запуска поисковика  файлов меньше предельного размера в  выбранной папке")      
+### 3.5. Собираем кнопку запуска графики фичи  Счетчик файлов
+    btn_count = ft.ElevatedButton("Запуск Счетчика  файлов в папке, включая вложенные папки",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=open_count_gui,
+                            tooltip="Кнопка для запуска Счетичика  файлов в папке")      
+
 ## 4. Собираем визуализацию элементов Единого окна
     page.add(#ft.Row([btn1], spacing=20),
             ft.Row(
@@ -63,7 +72,7 @@ def main_show(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER
                    ),
             ft.Container(
-        content=ft.Column([btn_star, btn_analize, btn_modif, btn_find], spacing=20, alignment=ft.MainAxisAlignment.START),
+        content=ft.Column([btn_star, btn_analize, btn_modif, btn_find, btn_count], spacing=20, alignment=ft.MainAxisAlignment.START),
         padding=ft.padding.only(left=20, top=40)
                         )
             )

@@ -2,7 +2,7 @@ import argparse
 import flet as ft
 import os
 import logging
-from src.filesystem.cli_delete_files import delete_path
+from src.filesystem.cli_copy_files import copy_file
 
 import flet as ft
 import os
@@ -30,11 +30,15 @@ def copy_gui(page: ft.Page):
             text_path.value = selected_path
             text_path.helper_text = "✅ Файл успешно выбран"
             text_path.helper_style = ft.TextStyle(color="green")
-            hello_text.value = "Файл выбран ----> Нажмите Кнопку Удалить"
+            hello_text.value = "Файл выбран ----> Нажмите Кнопку Копировать файл"
             hello_text.color = "green"
             hello_text.size = 30
             path = os.path.normpath(str(selected_path))
             page.session.set('directory', path)
+            # открываем кнопку Копировать
+            btn_copy.visible = True
+            # прячем кнопку Выбор файла
+            btn_select.visible = False
             # убираем кнопку выбора
             
         else:
@@ -55,6 +59,35 @@ def copy_gui(page: ft.Page):
             file_type=ft.FilePickerFileType.ANY,
             initial_directory=os.path.expanduser("~")
         )
+        ### 2.2. Собираем функцию кнопки Копировать файл
+    def on_button_copy(e):
+        
+        try:
+            # забираем из page.session путь записанный в функции on_dialog_result
+            res = page.session.get('directory')
+            copy_file(res)
+          # убираем кнопку Удалить папку
+            btn_select.visible = False            
+                      
+            # записываем результат Счетчика в поле для вывода в Окне
+            
+            ##  "                 РЕЗУЛЬТАТ\n     Удаление объектов произведено\n
+            # Нажмите кнопку Срос для перевода Окна в режим готовности"
+            hello_text.value = """                 
+                                            РЕЗУЛЬТАТ
+                                    
+                            Копирование файла  произведено
+            Нажмите кнопку Срос для перевода Окна в режим готовности"""
+            hello_text.color = 'orange'
+            hello_text.size = 30
+            # btn_find.visible = False
+        except Exception as err:
+            err = f"❌ Ошибка: {err}"
+            hello_text.value = err
+            hello_text.color = "red"        
+        
+        # После удаления закрываем диалог
+        page.update()
 
     ## 3. Задание ВСЕХ кнопок
     ### 3.1. Кнопка выбора файла
@@ -64,7 +97,10 @@ def copy_gui(page: ft.Page):
         visible=True,
         on_click=open_file_picker,  # Правильно привязываем функцию
         tooltip="Нажмите, чтобы выбрать файл через проводник Windows"
-    )
+                                    )
+    #### 3.2. Задание Кнопки  Удаление
+    btn_copy = ft.ElevatedButton(text="Копировать файл", visible=False, bgcolor="green", color="white", on_click=on_button_copy)
+    
     
 
 
@@ -73,7 +109,7 @@ def copy_gui(page: ft.Page):
         ft.Column(
             [
                 text_path, 
-                ft.Row([btn_select], spacing=20),  # Добавил обе кнопки
+                ft.Row([btn_select, btn_copy], spacing=20),  # Добавил обе кнопки
                 ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER), 
             ],
             expand=True
@@ -84,7 +120,7 @@ def copy_gui(page: ft.Page):
 
 #### 5. Вызов функции 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
+    parser = argparse.ArgumentParser(description="Копируем файл")
     args = parser.parse_args()
     
     try:

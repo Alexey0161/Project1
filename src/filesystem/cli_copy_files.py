@@ -17,7 +17,7 @@ import sys
 import shutil
 import logging
 
-logging.getLogger().setLevel(logging.INFO)
+
 
 def copy_file(filename):
     base_path = os.getcwd() 
@@ -38,7 +38,8 @@ def copy_file(filename):
 
     # 4. Проверка: не существует ли уже копия?
     if os.path.exists(dst_path):
-        logging.warning(f"Файл {new_filename} уже существует.")
+        # logging.warning(f"Файл {new_filename} уже существует.")
+        raise Exception(f"Файл {new_filename} уже существует.")
         return
 
     try:

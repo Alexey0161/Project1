@@ -59,7 +59,7 @@ def copy_gui(page: ft.Page):
             file_type=ft.FilePickerFileType.ANY,
             initial_directory=os.path.expanduser("~")
         )
-        ### 2.2. Собираем функцию кнопки Копировать файл
+### 2.2. Собираем функцию кнопки Копировать файл
     def on_button_copy(e):
         
         try:
@@ -82,13 +82,42 @@ def copy_gui(page: ft.Page):
             hello_text.size = 30
             # btn_find.visible = False
         except Exception as err:
-            err = f"❌ Ошибка: {err}"
+            err = f'''                          ⚠️ Ошибка: {err}
+            
+            Выберите другой файл для копирования, для чего нажмите кнопку Сброс'''
             hello_text.value = err
             hello_text.color = "red"        
         
         # После удаления закрываем диалог
         page.update()
+### 2.5. Собираем функцию кнопки Сброс
+    def reset_app(e): # Сброс
+        
+        hello_text.value = "Удалитель папок  готов к работе \n\nРежим ожидания ввода пути к папке"
+ 
+        hello_text.color = "green"
+        hello_text.size = 30
+        page.session.set(None, None)
+        text_path.color = "blue"
+        text_path.value = None
+        # возвращаем видимость кнопки и поля для ввода пути к директории
+        text_path.visible = True
 
+        # открываем кнопку Выбор Папки:
+        btn_select.visible = True
+        # прячем строку "text_path.helper_text"
+        text_path.helper_text = ''
+        # прячем кнопку Удалитель папок
+        btn_copy.visible = False
+        page.update()      
+ ###  2.6. Собираем функцию Кнопки Домой 
+    def on_home(e):
+        from run_gui import main_show
+        page.clean() # очищаем экран от элементов графики Звездочки
+        main_show(page) # вызываем Главное Меню/Единое окно
+        page.update()       
+    page.update()
+    
     ## 3. Задание ВСЕХ кнопок
     ### 3.1. Кнопка выбора файла
     btn_select = ft.ElevatedButton(
@@ -98,19 +127,29 @@ def copy_gui(page: ft.Page):
         on_click=open_file_picker,  # Правильно привязываем функцию
         tooltip="Нажмите, чтобы выбрать файл через проводник Windows"
                                     )
-    #### 3.2. Задание Кнопки  Удаление
+#### 3.2. Задание Кнопки  Удаление
     btn_copy = ft.ElevatedButton(text="Копировать файл", visible=False, bgcolor="green", color="white", on_click=on_button_copy)
+### 3.3. Задание Кнопки Сброс  (функция reset_app)      
+    btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, visible=True, on_click=reset_app,
+                                  tooltip="Кнопка для сброса и перевода окна в готовность к работе")
+ ### 3.4.  Задание Кнопки Домой     
+    btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
+        tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
+    btn_home.visible = True
     
-    
-
-
-    ## 4. Добавляем элементы графики
+    ### 4. Добавляем элементы графики
     page.add(
         ft.Column(
             [
                 text_path, 
-                ft.Row([btn_select, btn_copy], spacing=20),  # Добавил обе кнопки
+                ft.Row([btn_select, btn_copy, btn_reset], spacing=20),  # Добавил обе кнопки
                 ft.Row([hello_text], alignment=ft.MainAxisAlignment.CENTER), 
+                        ft.Container(expand=True),
+            ft.Container(
+                    content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
+                    padding=ft.padding.only(right=20, bottom=50),
+                            )
+ 
             ],
             expand=True
         )

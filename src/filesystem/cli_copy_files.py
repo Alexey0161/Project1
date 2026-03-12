@@ -17,6 +17,8 @@ import sys
 import shutil
 import logging
 
+logging.getLogger().setLevel(logging.INFO)
+
 def copy_file(filename):
     base_path = os.getcwd() 
     src_path = os.path.join(base_path, filename)
@@ -43,6 +45,7 @@ def copy_file(filename):
         # Используем профессиональный инструмент
         shutil.copy2(src_path, dst_path)
         logging.info(f"Файл {filename} успешно скопирован в {new_filename}")
+        print(f"Файл {filename} успешно скопирован в {new_filename}")
     except Exception as e:
         logging.error(f"Не удалось скопировать файл: {e}")
 

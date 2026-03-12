@@ -1,5 +1,6 @@
 import flet as ft
 
+
 def main(page: ft.Page):
     # Инициализируем состояние в сессии при старте
     page.session.set('recursive', False)
@@ -19,12 +20,12 @@ def main(page: ft.Page):
     def on_button_click(e):
         # Достаем значение из сессии прямо в момент клика
         is_recursive = page.session.get('recursive')
-        
+
         if is_recursive:
             print("🚀 Запуск С РЕКУРСИЕЙ")
         else:
             print("🎯 Запуск БЕЗ РЕКУРСИИ")
-            
+
         btn_start.disabled = True
         page.update()
 

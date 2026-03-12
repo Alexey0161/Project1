@@ -1,7 +1,9 @@
+import logging
 import os
 import sys
-import logging
-from src.config import BYTES_PER_KB, setup_logging 
+
+from src.config import BYTES_PER_KB, setup_logging
+
 
 def find_file(target_dir, size):
     target_dir = os.path.normpath(target_dir)
@@ -11,10 +13,10 @@ def find_file(target_dir, size):
 
     except (ValueError, TypeError):
         print('Ошибка: Вводимое значение должно содержать только цифры')
-        
-    found_files = [] 
+
+    found_files = []
     if  os.path.exists(target_dir): # через if защищаем код, от падения, если пути не сущенствует
-        result = ''        
+        result = ''
         for r, d, f in os.walk(target_dir):
             for i in f: # f - walk выдает файлы в виде списка
 
@@ -25,16 +27,16 @@ def find_file(target_dir, size):
                     full_size = os.path.getsize(path_i)
 
                     if  limit_size is not None:
-                        
+
                         if full_size < limit_size:
                             found_files.append(i)
                             print(f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}')
                             result += f'Найден файл: {i} {full_size / BYTES_PER_KB: .2f}\n'
                     else:
                         return
-    else: 
+    else:
         raise FileNotFoundError(f"Ошибка: Путь {target_dir} не существует.")
-    print(result, 37)    
+    print(result, 37)
     return result
 
 if __name__ == '__main__':

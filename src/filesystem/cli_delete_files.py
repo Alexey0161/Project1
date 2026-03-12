@@ -3,6 +3,7 @@ import os
 import shutil
 import sys
 
+
 def delete_path(target_path):
     # Проверяем, существует ли путь
     if not os.path.exists(target_path):
@@ -22,7 +23,7 @@ def main():
 
     args = parser.parse_args()
 
-    
+
     delete_path(args.name)
 
 if __name__ == "__main__":

@@ -1,26 +1,27 @@
 import argparse
-import flet as ft 
-import os
 import logging
+import os
+
+import flet as ft
+from gui.logic.chek_path import chek
 from gui.logic.logic_save_to_csv import save_to_csv
 from src.filesystem.cli_star_ficha import star_ficha
-from gui.logic.chek_path import chek
-from src.config import BYTES_PER_KB, setup_logging
 
-def star_gui(page: ft.Page):  
-    
+
+def star_gui(page: ft.Page):
+
 # 1. Настройка "холста"
-    page.title = "ЗВЕЗДНЫЙ Анализатор" 
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER 
+    page.title = "ЗВЕЗДНЫЙ Анализатор"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.theme_mode = ft.ThemeMode.DARK
-    
+
     text_path = ft.TextField(label='Введите путь к директории ВРУЧНУЮ или ВЫБЕРИТЕ ПАПКУ через кнопку "ВЫБРАТЬ ПАПКУ"',   hint_text='Путь')
     text_path.visible = True # на стартовом окне поле для ввода пути делаем видимым
     hello_text = ft.Text(value = "ЗВЕЗДНЫЙ Анализатор директории готов к работе\nРежим ожидания ввода пути к директории",  size=20, color="blue")
 
 
 ## 2. Задаем  функции кнопок:
-### 2.1.  Создаем функцию Кнопки btn_select выбора папки из Windows   
+### 2.1.  Создаем функцию Кнопки btn_select выбора папки из Windows
     def on_dialog_result(e):  # Выбор из Windows
         if e.path:
             # Если путь выбран - обновляем поле и радуем пользователя
@@ -34,15 +35,15 @@ def star_gui(page: ft.Page):
             btn1.visible = True
             path = os.path.normpath(str(text_path.value))
             page.session.set('result', path)
-            
+
         else:
-            # Если нажали отмену - не даем программе упасть 
+            # Если нажали отмену - не даем программе упасть
             text_path.helper_text = "⚠️ Выбор отменен"
             text_path.helper_style = ft.TextStyle(color="yellow")
         page.update()
-    
+
     get_directory_dialog = ft.FilePicker(on_result=on_dialog_result)
-    
+
     page.overlay.append(get_directory_dialog) # Обязательно добавляем на холст!
 
 
@@ -50,13 +51,13 @@ def star_gui(page: ft.Page):
     def on_button_click_1(e): # Ввод
 
         try:
-            
+
             real_path = chek(text_path)
             text_path.helper_text = "✅ Путь успешно выбран"
             page.session.set('result', real_path)
             hello_text.value = 'Нажмите кнопку\nЗапуск Анализатора'
             hello_text.color = "green"
-                    
+
             #делаем невидимыми поле для ввода пути и кнопку Ввод
             text_path.visible = False
             btn1.visible = False
@@ -64,15 +65,15 @@ def star_gui(page: ft.Page):
             btn.visible = True
             # после нажатия на кнопку "Ввод" делаем невидимой кнопку Выбора папкиЖ
             btn_select.visible = False
-        except Exception as e: 
+        except Exception as e:
         # Пишем текст по центру экрана для привлечения внимания
             hello_text.value = e
             hello_text.color = "yellow"
             text_path.helper_text = "⚠️ Проверьте правильность ввода пути"
             text_path.value = ""
             text_path.helper_style = ft.TextStyle(color="red")
-            
-    
+
+
         page.update()
 
 ### 2.3.  Кнопки Запуска Анализа:
@@ -89,12 +90,12 @@ def star_gui(page: ft.Page):
             res = page.session.get('result')
             # запускаем функцию star_ficha, которую мы импортировали из cli_star_ficha
             fresh_result = star_ficha(res)
-            # собираем  вывод res (общая длинная строка) в список 
+            # собираем  вывод res (общая длинная строка) в список
             ## из отдельных строк по разделителю '\n'
             res_list = fresh_result.split('\n')
-        
+
             page.session.set('res_list', res_list)
-        
+
             # делаем видимой кнопку вывода в файл
             btn2.visible = True
             # Формируем надпись под выводимыми данными
@@ -104,7 +105,7 @@ def star_gui(page: ft.Page):
             # Очищаем контейнер перед новым выводом
             result_container.controls.clear()
             # Добавляем наш результат  в полосу прокрутки (можно вернуть крупный шрифт!)
-            
+
             result_container.controls.append(
                 ft.Text(value=fresh_result, size=20, color="green", font_family="Consolas")
             )
@@ -112,24 +113,25 @@ def star_gui(page: ft.Page):
             btn.visible = False
         except Exception as err:
             result_container.controls.append(ft.Text(f"❌ Ошибка: {err}", color="red"))
-        
+
         page.update()
-        
+
 ### 2.4. Собираем функцию Кнопки Вывода в scv
     def on_button_click_2(e): # Вывод в scv
         hello_text.value = "✅ Отчет сохранен в report.scv!"
-        # получаем из page.session сохраненный в функции путь к папке 
+        # получаем из page.session сохраненный в функции путь к папке
         res_list = page.session.get('res_list')
         # вызываем функцию save_to_csv, импортированную из файла logic-save_to_csv.py
         save_to_csv(res_list)
         # Прячем кнопку Вывод  в scv
         btn2.visible = False
         page.update()
-        
+
 ### 2.5. Собираем функцию Кнопки Сброс
     def reset_app(e): # Сброс
-        
+
         hello_text.value = "ЗВЕЗДНЫЙ Анализатор директории готов к работе\nРежим ожидания ввода пути к директории"
+        hello_text.size = 20
         hello_text.color = 'blue'
         page.session.set(None, None)
         text_path.color = "blue"
@@ -145,31 +147,31 @@ def star_gui(page: ft.Page):
         text_path.helper_text = ''
         # удаляем содержимое окна прокрутки
         result_container.controls.clear()
-        
+
         page.update()
-###  2.6. Собираем функцию Кнопки Домой 
+###  2.6. Собираем функцию Кнопки Домой
     def on_home(e):
         from run_gui import main_show
         page.clean() # очищаем экран от элементов графики Звездочки
         main_show(page) # вызываем Главное Меню/Единое окно
-        page.update()      
-## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок  
+        page.update()
+## 3.              РАЗДЕЛ  - задание ВСЕХ кнопок
 
 ### 3.1. Задание Кнопки "Запуск Анализатора" (функция on_button_click)
     btn = ft.ElevatedButton("Запуск Анализатора",  icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_button_click,
-                            tooltip="Кнопка для запуска Анализа выбранной папки")  
+                            tooltip="Кнопка для запуска Анализа выбранной папки")
     btn.visible = False
 ### 3.2. Задание Кнопки "Ввод" (функция on_button_click_1)
     btn1 = ft.ElevatedButton('ВВОД', icon=ft.icons.PLAY_ARROW_SHARP, visible=False, on_click=on_button_click_1,
-                             tooltip="Кнопка для подтверждения выбранной папки для анализа")  
+                             tooltip="Кнопка для подтверждения выбранной папки для анализа")
 
 ### 3.3. Задание  Кнопки для  вывода результата в файл csv (функция on_button_click_2)
-         
+
     btn2 = ft.ElevatedButton("Вывод Анализа в csv", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_button_click_2,
-                             tooltip="Вывод Результатов Анализа в файл csv")  
+                             tooltip="Вывод Результатов Анализа в файл csv")
     btn2.visible = False
 
-### 3.4. Задание Кнопки Сброс  (функция reset_app)      
+### 3.4. Задание Кнопки Сброс  (функция reset_app)
     btn_reset = ft.ElevatedButton("Сброс", icon=ft.icons.REFRESH, on_click=reset_app,
                                   tooltip="Кнопка для сброса и перевода окна в готовность к работе")
 ### 3.5. Задание Кнопки выбора папки  Windows (функция on_dialog_result)
@@ -178,13 +180,13 @@ def star_gui(page: ft.Page):
         icon=ft.icons.FOLDER_OPEN,
         on_click=lambda _: get_directory_dialog.get_directory_path(),
         tooltip="Нажмите, чтобы выбрать папку через проводник Windows" #  тултип
-    )  
-### 3.6.  Собираем Кнопку Домой     
+    )
+### 3.6.  Собираем Кнопку Домой
     btn_home = ft.ElevatedButton("ДОМОЙ", icon=ft.icons.PLAY_ARROW_SHARP, on_click=on_home,
         tooltip="Нажмите, чтобы перейти в Главное меню выбора фичей") #  тултип
 ### 4. Добавляем элементы графики на страницу Окна -  метод .add() с кортежем *controls
     page.add(text_path, ft.Row([btn1, btn_select], spacing=20),
-            
+
         ft.Row([btn, btn2, btn_reset], alignment=ft.MainAxisAlignment.CENTER, spacing=20 ),
         ft.Row(
             [hello_text],
@@ -192,19 +194,19 @@ def star_gui(page: ft.Page):
                 ),
         ft.Row([result_container], alignment=ft.MainAxisAlignment.CENTER),
         # добавляем кнопку Домой, помещаем ее вниз по вертикали и вправо по горизонтали
- 
+
         ft.Container(
         content=ft.Row([btn_home], alignment=ft.MainAxisAlignment.END),
         padding=ft.padding.only(right=20, bottom=80) #  "подъемник" на 20 пикселей от края
     )
             )
 
-#### 5. Вызов функции 
+#### 5. Вызов функции
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
-    
+
     args = parser.parse_args()
-    
+
     try:
      ft.app(target=star_gui)
     except Exception as e:

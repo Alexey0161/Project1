@@ -1,19 +1,17 @@
-import argparse
-import logging
-import flet as ft 
 import os
+
+import flet as ft
 from src.filesystem.cli_star_ficha import star_ficha
 
 
-
-def main(page: ft.Page): 
+def main(page: ft.Page):
     page.title = "Анализатор Pro"
     page.theme_mode = ft.ThemeMode.DARK
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
     # Создаем ОДИН объект для вывода текста
     status_text = ft.Text(value="Режим ожидания ввода пути", size=20, color="blue")
-    
+
     # Поле ввода
     path_input = ft.TextField(label='Путь', hint_text='Введите путь к директории')
 
@@ -24,7 +22,7 @@ def main(page: ft.Page):
             status_text.color = "red"
             page.update()
             return
-            
+
         try:
             # Напрямую берем значение из поля ввода!
             res = star_ficha(os.path.normpath(path_input.value))
@@ -60,9 +58,9 @@ ft.app(target=main)
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
 #     parser.add_argument("path", help="Путь к папке")
-   
+
 #     args = parser.parse_args()
-    
+
 #     try:
 #        star_ficha(args.path)
 #     except Exception as e:

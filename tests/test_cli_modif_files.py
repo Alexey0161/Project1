@@ -1,15 +1,15 @@
-from pathlib import  Path
-from datetime import datetime
 import os
+from datetime import datetime
 
 from src.filesystem.cli_modif_files import process_logic
+
 
 # today = date.today()
 def test_modif_files_dir(tmp_path, recursive=None):
     # today = date.today()
     stats = os.stat(tmp_path)
     formatted_date = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d')
-        
+
         # 1. Создаем структуру файлов во временной папке
     # (tmp_path — это путь в виде объекта, поэтому переводим в str для вашей функции)
     base_dir = tmp_path / "project"
@@ -29,10 +29,10 @@ def test_modif_files_dir(tmp_path, recursive=None):
 
     #### 3. Перехватываем вывод
     # captured = capsys.readouterr()
-    
+
     # 4. Проверяем результат
     # Мы создали 3 файла (2 в корне + 1 во вложенной папке)
-    
+
     # # 4.1. Вызываем функцию
     if recursive:
         process_logic(str(base_dir), recursive)
@@ -41,7 +41,7 @@ def test_modif_files_dir(tmp_path, recursive=None):
                 assert i in process_logic(str(base_dir))
     else:
         process_logic(str(base_dir))
-    
+
     # 4. Проходим по дереву tmp_....  и проверяем, что в имена добавились даты
         for  f in os.listdir(base_dir):
             if os.path.isfile(f):
@@ -58,7 +58,7 @@ def test_modif_files_dir(tmp_path, recursive=None):
         # print("Только файлы (используя pathlib):")
         # for file in files:
         #     print(file.name)
-        
+
 # def test_modif_files_single(tmp_path):
 #     file_single = tmp_path/'single_file.txt'
 #     file_single.write_text("Hello, this is a test file")
@@ -66,4 +66,3 @@ def test_modif_files_dir(tmp_path, recursive=None):
 #     new_single_file = f'single_file_{today}'
 #     process_logic(str(file_single))
 #     assert file_single == new_single_file
-        

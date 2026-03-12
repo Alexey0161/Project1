@@ -3,7 +3,6 @@ from pathlib import Path
 from src.filesystem.cli_find_file import find_file
 
 
-
 def test_find_file(tmp_path, capsys):
     # 1. Создаем структуру папок внутри временной директории
 

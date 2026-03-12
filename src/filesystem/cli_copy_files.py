@@ -12,15 +12,14 @@
 
     """
 
-import os
-import sys
-import shutil
 import logging
-
+import os
+import shutil
+import sys
 
 
 def copy_file(filename):
-    base_path = os.getcwd() 
+    base_path = os.getcwd()
     src_path = os.path.join(base_path, filename)
 
     # 1. Проверка существования оригинала
@@ -31,7 +30,7 @@ def copy_file(filename):
     # 2. Правильное разделение имени (берем только имя, без пути!)
     just_name = os.path.basename(src_path)
     name_part, extension = os.path.splitext(just_name)
-    
+
     # 3. Формируем путь назначения
     new_filename = f"{name_part}_copy{extension}"
     dst_path = os.path.join(base_path, new_filename)
@@ -52,11 +51,11 @@ def copy_file(filename):
 
 
 if __name__ == "__main__":
-   
+
     # Проверяем, что скрипт запущен напрямую, а не импортирован как модуль
     try:
     # Проверяем, что передано достаточно аргументов командной строки
-      
+
         if len(sys.argv) < 2:
             raise ValueError("Ошибка в количестве аргументов. Правильное использование: <python cli_copy_files.py>  <имя_файла>")
         filename = sys.argv[1]
@@ -65,7 +64,7 @@ if __name__ == "__main__":
         copy_file(filename)
     except ValueError as e:
         # Если аргументов меньше 2 (скрипт, имя файла), выводим инструкцию
-        
+
         logging.error(e)
 
 # def copy_file(filepath):
@@ -95,13 +94,13 @@ if __name__ == "__main__":
 #         logging.info(f"Файл {just_name} успешно скопирован в {new_filename}")
 #     except Exception as e:
 #         logging.error(f"Не удалось скопировать файл: {e}")
-        
+
 # if __name__ == "__main__":
-   
+
 #     # Проверяем, что скрипт запущен напрямую, а не импортирован как модуль
 #     try:
 #     # Проверяем, что передано достаточно аргументов командной строки
-      
+
 #         if len(sys.argv) < 2:
 #             raise ValueError("Ошибка в количестве аргументов. Правильное использование: <python cli_copy_files.py>  <имя_файла>")
 #         filename = sys.argv[1]
@@ -111,5 +110,5 @@ if __name__ == "__main__":
 #         copy_file(filename)
 #     except ValueError as e:
 #         # Если аргументов меньше 2 (скрипт, имя файла), выводим инструкцию
-        
+
 #         logging.error(e)

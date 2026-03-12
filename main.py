@@ -1,14 +1,15 @@
-import argparse
-import sys
 import logging
+
+from src.filesystem.cli_analize_files import analize_files
+from src.filesystem.cli_cnt_files import count_files
+
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
-from src.filesystem.cli_cnt_files import count_files
+from src.filesystem.cli_delete_files import delete_path
 from src.filesystem.cli_find_file import find_file
 from src.filesystem.cli_modif_files import process_logic
-from src.filesystem.cli_analize_files import analize_files
-from src.filesystem.cli_delete_files import delete_path
 from src.filesystem.cli_star_ficha import star_ficha
+
 
 def main():
     print("--- Мой Супер Проект (Project1) ---")
@@ -28,26 +29,26 @@ def main():
             filename = input('Введите имя файла, который надо скопировать: ')
             copy_file(filename)
         except Exception as e:
-                
+
                 print(e)
-    
+
     if choice == "2":
         print('----Запускает удалитель папок и  файлов ----')
         try:
             target_path = input('Введите путь: ')
             delete_path(target_path)
         except Exception as e:
-                
+
                 print(e)
-    
-    
+
+
     if choice == "3":
         print('----Запускает счетчик файлов ----')
         try:
             target_dir = input('Введите полный путь к директории, в который надо подсчитать количество файлов: ')
             count_files(target_dir)
         except Exception as e:
-                
+
                 logging.error(e)
     if choice == "4":
         print('----Запускает поисковик файлов ----')
@@ -56,7 +57,7 @@ def main():
             size = input('Введите значение размера, меньше которого будет размер найденных файлов: ')
             find_file(target_dir, size)
         except Exception as e:
-                
+
                 logging.error(e)
     if choice == "5":
         print('----Запускает установщик даты в имя файла ----')
@@ -66,21 +67,21 @@ def main():
             process_logic(target_dir, recursive)
         except Exception as e:
             logging.error(e)
-        
+
     if choice == "6":
-        print('----Запускает анализатор директории ----')                
+        print('----Запускает анализатор директории ----')
         try:
             root_path = input(' Введите полный путь к директории, выбранной для анализа: ')
             analize_files(root_path)
         except Exception as e:
             logging.error(e)
     if choice == "7":
-        print('----Запускает ЗВЕЗДНЫЙ анализатор директории ----')                
+        print('----Запускает ЗВЕЗДНЫЙ анализатор директории ----')
         try:
             root_path = input(' Введите полный путь к директории, выбранной для анализа: ')
             star_ficha(root_path)
         except Exception as e:
-            logging.error(e)               
+            logging.error(e)
 
 # Магическая проверка: запущен ли файл напрямую
 if __name__ == "__main__":

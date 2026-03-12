@@ -1,7 +1,9 @@
-import os
-import logging
 import argparse
-from src.config import BYTES_PER_KB, setup_logging 
+import logging
+import os
+
+from src.config import BYTES_PER_KB, setup_logging
+
 
 #  собираем вспомогательную функцию для поиска ключа по пути к файлу
 def find_folder_file(folder_path,file_path):
@@ -11,9 +13,9 @@ def find_folder_file(folder_path,file_path):
     folder_parts = folder_path_norm.split(os.sep)
     file_parts_folder = file_parts[ : len(folder_parts)]
     rel_path_file_folder = os.sep.join(file_parts_folder)
-    
+
     return rel_path_file_folder
-       
+
 def calculate_everything(path):
     total = 0
     dict_for_dir = {}
@@ -34,7 +36,7 @@ def calculate_everything(path):
         else:
             if files:
                 file_path = os.path.join(root, files[0])
-                
+
                 current_parent_key = find_folder_file(folder_path, file_path)
                 for f in files:
                     fp = os.path.join(root, f)
@@ -44,7 +46,7 @@ def calculate_everything(path):
     total_dict['total'] = total
     total_dict['dict_for_dirfiles'] = dict_for_dirfiles
     total_dict['dict_for_dir'] = dict_for_dir
-   
+
     return total_dict
 
 def format_size(size_bytes):
@@ -66,7 +68,7 @@ def analize_files(root_path):
 
     root_path = os.path.normpath(root_path)
     if not os.path.exists(root_path): # через if защищаем код, от падения, если пути не сущенствует
-        
+
             raise FileNotFoundError(f"Ошибка: Путь {root_path} не существует.")
     else:
 
@@ -77,14 +79,14 @@ def analize_files(root_path):
         dict_for_dirfiles = total_dict['dict_for_dirfiles']
 
         # выводим полный размер директории
-     
+
         print(f'full size: {format_size(full_size):>20}')
         result = f'full size: {format_size(full_size):>20}\n'
-        #  проверяем есть ли в директории вложенные папки 
-        if dict_for_dir: 
+        #  проверяем есть ли в директории вложенные папки
+        if dict_for_dir:
             for key, value in dict_for_dir.items():
                 name_folder = os.path.basename(key)
-               
+
                 print(f'-folder: {name_folder:<10}  {format_size(value):>10}')
                 result += f'-folder: {name_folder:<10}  {format_size(value):>10}\n'
         #  проверяем есть ли в КОРНЕ директории вложенные файлы
@@ -92,19 +94,18 @@ def analize_files(root_path):
             for key, value in dict_for_dirfiles.items():
                 print(f'-file: {key:<10} {format_size(value):>10}')
                 result += f'-file: {key:<10} {format_size(value):>10}\n'
-        
+
         return result
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Считаем размер папок и файлов на уровне вызова")
     parser.add_argument("path", help="Путь к папке")
-   
+
     args = parser.parse_args()
-    
+
     try:
-       setup_logging() 
+       setup_logging()
        analize_files(args.path)
     except Exception as e:
         logging.error(e)
-               

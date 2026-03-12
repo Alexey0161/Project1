@@ -1,0 +1,20 @@
+# новый вариант кода
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# Здесь теперь живут настройки проверок
+select = ["E", "F", "W", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# Игнорируем длину строки в тестах и документации, если очень нужно
+"tests/*" = ["E501"]
+"src/ficha_copy.py" = ["E501"]
+"src/parser2.py" = ["E501"]
+
+

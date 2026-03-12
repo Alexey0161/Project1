@@ -115,7 +115,7 @@ def find_gui(page: ft.Page):
         
         hello_text.value = "Поисковик файлов по критерию: меньше заданного размера готов к работе\nРежим ожидания ввода пути к папке и предельного размера файла"
         hello_text.color = "green"
-        hello_text.size = 30
+        hello_text.size = 20
         page.session.set(None, None)
         text_path.color = "blue"
         text_path.value = None

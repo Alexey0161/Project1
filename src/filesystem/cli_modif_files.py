@@ -12,23 +12,25 @@ import logging
 
 def rename_file_with_date(file_path):
     """Вспомогательная функция для переименования одного файла"""
-    try:
-        stats = os.stat(file_path)
-        formatted_date = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d')
-        directory = os.path.dirname(file_path)
-        name, ext = os.path.splitext(os.path.basename(file_path))
+    # try: убрал этот блок, чтобы ошибка всплывала в Графику и там отображалась
+    stats = os.stat(file_path)
+    formatted_date = datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%d')
+    directory = os.path.dirname(file_path)
+    name, ext = os.path.splitext(os.path.basename(file_path))
+    print(formatted_date, 20)
+    if formatted_date in name:
+        logging.warning(f"Пропуск файла {name}: дата уже присутствует.")
+        raise Exception(f"Пропуск файла {name}: дата уже присутствует.")
         
-        if formatted_date in name:
-            logging.info(f"Пропуск файла {name}: дата уже присутствует.")
-            return
-        else:
-            new_name = f"{name}_{formatted_date}{ext}"
-            new_path = os.path.join(directory, new_name)
-            
-            logging.info(f'Меняем: {name}{ext} --> {new_name}')
-            os.rename(file_path, new_path)
-    except Exception as e:
-        logging.warning(f"Ошибка при обработке {file_path}: {e}")
+        
+    else:
+        new_name = f"{name}_{formatted_date}{ext}"
+        new_path = os.path.join(directory, new_name)
+        
+        logging.info(f'Меняем: {name}{ext} --> {new_name}')
+        os.rename(file_path, new_path)
+    # except Exception as e: убрал этот блок, чтобы ошибка всплывала в Графику и там отображалась
+    #     logging.warning(f"Ошибка при обработке {file_path}: {e}")
 
 def process_logic(root_path, recursive=None):
     

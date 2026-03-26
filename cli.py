@@ -5,8 +5,6 @@ import sys
 from src.filesystem.cli_analize_files import analize_files
 from src.filesystem.cli_cnt_files import count_files
 
-# # импортируем функцию интерактивного меню из файла main.py
-# from main import main as start_interactive
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_delete_files import delete_path
@@ -28,10 +26,10 @@ def main():
     parser = argparse.ArgumentParser(description="Project1: Универсальный инструмент")
     subparsers = parser.add_subparsers(dest="command", help="Команды")
 
-    # --- КОМАНДА ДЛЯ ДУШИ (Ваше меню) делаем add_parser для меню---
+    # --- КОМАНДА (меню) делаем add_parser для меню---
     menu_parser = subparsers.add_parser('menu', help='Запустить интерактивный интерфейс')
 
-       # --- КОМАНДЫ ДЛЯ ТЗ (Утилиты) ---
+       # --- КОМАНДЫ  ТЗ --
 
     # Команда 1: Копирователь файла
     copy_p = subparsers.add_parser('copy', help='Скопировать файл')
@@ -65,20 +63,13 @@ def main():
     star_p = subparsers.add_parser('star', help='Вывести звездную информаию о размерах директории и вложенных папок и файлов')
     star_p. add_argument('root_path', type=str, help='Полный путь к директории для анализа')
 
-    # args = parser.parse_args()
+    args = parser.parse_args()
 
-    try:
-        args = parser.parse_args()
 
-    except SystemExit:
-    # Аргпарс сам выводит ошибку и вызывает sys.exit()
-
-        print("Ошибка: Пользватель, Вы ввели что-то не то. Проверьте корректность ввода аргументов по количеству и названию")
-        sys.exit(1)
 
         # ЛОГИКА ВЫБОРА
     if args.command == 'menu':
-        start_menu()  # Запускаем интерактивное меню!
+        start_menu()  # Запускаем интерактивное меню
     elif args.command == 'copy':
         copy_file(args.file_name)
     elif args.command == 'delete':

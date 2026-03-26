@@ -117,7 +117,7 @@ def modif_gui(page: ft.Page):
             #                        ,  size = 30)
             hello_text.value = f"❌ Ошибка: {err}\nНажмите кнопку Сброс и повторите Ввод пути заново"
             hello_text.color = "red"
-            hello_text.size = 30
+            hello_text.size = 20
         page.update()
 ### 2.4. Собираем функцию кнопки Сброс
     def reset_app(e): # Сброс

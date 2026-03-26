@@ -6,7 +6,7 @@ from src.filesystem.cli_analize_files import analize_files
 from src.filesystem.cli_cnt_files import count_files
 
 # # импортируем функцию интерактивного меню из файла main.py
-from main import main as start_interactive
+# from main import main as start_interactive
 # импортируем функции фичей из соответствующих файлов
 from src.filesystem.cli_copy_files import copy_file
 from src.filesystem.cli_delete_files import delete_path
@@ -119,7 +119,7 @@ def main():
 
 def start_menu():
     # импортируем функцию интерактивного меню из файла main.py
-    # main import main as start_interactive
+    from main import main as start_interactive
     print("--- Добро пожаловать в Интерактивный Режим! ---")
     start_interactive()
 

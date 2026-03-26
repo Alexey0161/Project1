@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Project1"
+version = "0.1.0"
+description = "Универсальный инструмент для работы с файлами"
+authors = [
+    {name = "Alexey", email = "your_email@example.com"}
+]
+dependencies = [
+    "flet",
+    "pytest",
+    "ruff"
+]
+
+[project.scripts]
+
+# формат: команда = "имя_файла:имя_функции"
+my-cool-tool = "cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+

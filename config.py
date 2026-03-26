@@ -1,1 +1,0 @@
-BYTES_PER_KB = 1024
